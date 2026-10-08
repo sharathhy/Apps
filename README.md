@@ -1,6 +1,8 @@
 # Wellness suite
 
-A suite of health and wellness trackers built as one React Native (Expo) app for Android, iOS and the web. It has five modules (Water, Mood, Cycle, Pregnancy and Nutrition) with a shared design system. Each module can be turned on or off in a config file.
+A suite of health and wellness trackers built as one React Native (Expo) app for Android, iOS and the web. It has seven modules (Water, Mood, Sleep, Activity, Cycle, Pregnancy and Nutrition) with a shared design system. Each module can be turned on or off in a config file.
+
+On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 
 > **Status: Phase 0 (project setup).** The design tokens, UI kit, responsive navigation shell, localization (English and Hindi) and CI are in place. The module screens are placeholders.
 
@@ -96,6 +98,10 @@ Public repositories get unlimited Actions minutes. Private repositories get 2,00
 ## Medical disclaimer
 
 This app does not provide medical advice, diagnosis, or treatment. Consult a qualified healthcare professional.
+
+## Installable web app (PWA)
+
+The web build can be installed like an app. `apps/mobile/public/` holds the manifest, icons and a service worker (`sw.js`), and `src/app/+html.tsx` links them. Chrome, Edge and Android show an **Install app** button in Settings and on Home. On iPhone and iPad, people tap Share and then Add to Home Screen. Once the app has loaded, it opens and works offline.
 
 ## Deploying the web build (Vercel, free Hobby plan)
 

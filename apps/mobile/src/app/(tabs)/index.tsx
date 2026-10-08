@@ -1,10 +1,12 @@
 import { breakpoints } from '@wellness/design-tokens';
 import {
   AccentScope,
+  Appear,
   Card,
   EmptyState,
   Icon,
   Pressable,
+  ProgressRing,
   Screen,
   Text,
   useTheme,
@@ -13,24 +15,67 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useWindowDimensions, View } from 'react-native';
 
+import { InstallCard } from '@/components/InstallCard';
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
-import { useVisibleModules } from '@/features/profile';
+import { QuickToggles } from '@/components/QuickToggles';
+import { availableTrackers, useProfile, useVisibleModules } from '@/features/profile';
+import { getEnabledModules } from '@/features/registry';
 import type { ModuleManifest } from '@/features/types';
+import { dayPart } from '@/lib/greeting';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
+  const { colors } = useTheme();
   const modules = useVisibleModules();
+  const audience = useProfile((s) => s.audience) ?? 'everyone';
+  const total = getEnabledModules().filter((m) =>
+    availableTrackers(audience).includes(m.id),
+  ).length;
   const twoColumns = width >= breakpoints.tablet;
 
   return (
     <Screen>
-      <View className="gap-1">
-        <Text variant="display">{t('home.greeting')}</Text>
-        <Text variant="bodyLarge" tone="muted">
-          {t('app.tagline')}
-        </Text>
-      </View>
+      <Appear>
+        <View className="flex-row items-start justify-between gap-3">
+          <View className="flex-1 gap-1">
+            <Text variant="display">{t(`home.${dayPart(new Date())}`)}</Text>
+            <Text variant="bodyLarge" tone="muted">
+              {t('app.tagline')}
+            </Text>
+          </View>
+          <QuickToggles />
+        </View>
+      </Appear>
+
+      <Appear index={1}>
+        <Card className="flex-row items-center gap-4">
+          <ProgressRing
+            progress={total ? modules.length / total : 0}
+            size={72}
+            strokeWidth={8}
+            accessibilityLabel={t('home.activeTrackers', { count: modules.length, total })}
+          >
+            <Text variant="title3">{modules.length}</Text>
+          </ProgressRing>
+          <View className="flex-1 gap-1">
+            <Text variant="title3">
+              {t('home.activeTrackers', { count: modules.length, total })}
+            </Text>
+            <Pressable
+              accessibilityRole="link"
+              onPress={() => router.navigate('/settings')}
+              noScale
+              className="justify-center"
+            >
+              <Text variant="footnote" tone="primary">
+                {t('home.activeTrackersHint')}
+              </Text>
+            </Pressable>
+          </View>
+          <Icon name="sparkles" size={22} color={colors.primary} />
+        </Card>
+      </Appear>
 
       <Text variant="title3" className="mt-2">
         {t('home.subtitle')}
@@ -48,14 +93,15 @@ export default function HomeScreen() {
         </Card>
       ) : (
         <View className="flex-row flex-wrap gap-3">
-          {modules.map((module) => (
-            <View key={module.id} style={{ width: twoColumns ? '48.9%' : '100%' }}>
+          {modules.map((module, i) => (
+            <Appear key={module.id} index={i + 2} style={{ width: twoColumns ? '48.9%' : '100%' }}>
               <ModuleCard module={module} />
-            </View>
+            </Appear>
           ))}
         </View>
       )}
 
+      <InstallCard />
       <MedicalDisclaimer />
     </Screen>
   );

@@ -5,6 +5,8 @@ import { getEnabledModules, isModuleEnabled, phoneTabModules } from './registry'
 const allOn: Record<ModuleId, boolean> = {
   water: true,
   mood: true,
+  sleep: true,
+  activity: true,
   cycle: true,
   pregnancy: true,
   nutrition: true,
@@ -33,7 +35,7 @@ describe('module registry', () => {
   });
 
   it('ignores duplicates and unknown ids', () => {
-    const c = config(['water', 'water', 'sleep' as ModuleId, 'mood']);
+    const c = config(['water', 'water', 'yoga' as ModuleId, 'mood']);
     expect(getEnabledModules(c).map((m) => m.id)).toEqual(['water', 'mood']);
   });
 

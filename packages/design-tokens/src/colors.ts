@@ -32,11 +32,21 @@ export const palette = {
   rose: { 100: '#FBE8EF', 300: '#F293B6', 600: '#AE2257', 900: '#3A1A26' },
   coral: { 100: '#FCEBE3', 300: '#F5A383', 600: '#A8401C', 900: '#3A2118' },
   leaf: { 100: '#E6F3E6', 300: '#8BCF94', 600: '#2D7537', 900: '#1B2E1E' },
+  indigo: { 100: '#E8EAFB', 300: '#9FA9F2', 600: '#3949AB', 900: '#1C2140' },
+  orange: { 100: '#FDEFD9', 300: '#F5AE5B', 600: '#A64E05', 900: '#3A2A12' },
 } as const;
 
 export type ColorScheme = 'light' | 'dark';
 
-export const moduleIds = ['water', 'mood', 'cycle', 'pregnancy', 'nutrition'] as const;
+export const moduleIds = [
+  'water',
+  'mood',
+  'sleep',
+  'activity',
+  'cycle',
+  'pregnancy',
+  'nutrition',
+] as const;
 export type ModuleId = (typeof moduleIds)[number];
 
 export interface SemanticColors {
@@ -116,6 +126,8 @@ const accentRamp = {
   cycle: palette.rose,
   pregnancy: palette.coral,
   nutrition: palette.leaf,
+  sleep: palette.indigo,
+  activity: palette.orange,
 } as const;
 
 function accentsFor(scheme: ColorScheme): Record<ModuleId, AccentColors> {

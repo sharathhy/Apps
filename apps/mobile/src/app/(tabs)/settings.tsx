@@ -5,6 +5,7 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { InstallCard } from '@/components/InstallCard';
 import { ListRow } from '@/components/ListRow';
 import { audiences, useProfile, type Audience } from '@/features/profile';
 import { TrackerToggles } from '@/features/profile/components/TrackerToggles';
@@ -19,10 +20,14 @@ export default function SettingsScreen() {
   const region = regionDefaults(getLocales()[0]?.regionCode);
   const audience = useProfile((s) => s.audience) ?? 'everyone';
   const chooseAudience = useProfile((s) => s.chooseAudience);
+  const setLanguage = useProfile((s) => s.setLanguage);
+  const language = useProfile((s) => s.language);
 
   return (
     <Screen>
       <Text variant="title1">{t('settings.title')}</Text>
+
+      <InstallCard />
 
       <Section title={t('myTrackers.title')}>
         <Text variant="footnote" tone="muted">
@@ -55,8 +60,8 @@ export default function SettingsScreen() {
       <Section title={t('settings.language')}>
         <SegmentedControl<Language>
           label={t('settings.language')}
-          value={(i18n.resolvedLanguage as Language) ?? 'en'}
-          onChange={(lng) => void i18n.changeLanguage(lng)}
+          value={language ?? (i18n.resolvedLanguage as Language) ?? 'en'}
+          onChange={setLanguage}
           options={supportedLanguages.map((value) => ({
             value,
             label: t(`settings.languages.${value}`),

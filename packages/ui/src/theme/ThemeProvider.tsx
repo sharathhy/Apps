@@ -27,8 +27,9 @@ const schemeVars = { light: vars(themeVars('light')), dark: vars(themeVars('dark
 
 interface ThemeProviderProps {
   children: ReactNode;
-  /** Initial preference; persisted settings are wired up in Phase 1. */
-  initialPreference?: ThemePreference;
+  /** Controlled preference. When omitted the provider keeps its own state. */
+  preference?: ThemePreference;
+  onPreferenceChange?: (preference: ThemePreference) => void;
 }
 
 /**
@@ -36,9 +37,15 @@ interface ThemeProviderProps {
  * token values as CSS variables so NativeWind classes (`bg-surface`,
  * `text-text-muted`, `bg-water`) follow the active theme.
  */
-export function ThemeProvider({ children, initialPreference = 'system' }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  preference: controlled,
+  onPreferenceChange,
+}: ThemeProviderProps) {
   const system = useColorScheme();
-  const [preference, setPreference] = useState<ThemePreference>(initialPreference);
+  const [internal, setInternal] = useState<ThemePreference>('system');
+  const preference = controlled ?? internal;
+  const setPreference = onPreferenceChange ?? setInternal;
   const scheme: ColorScheme =
     preference === 'system' ? (system === 'dark' ? 'dark' : 'light') : preference;
 
@@ -50,7 +57,7 @@ export function ThemeProvider({ children, initialPreference = 'system' }: ThemeP
       colors: colors[scheme],
       accents: accents[scheme],
     }),
-    [scheme, preference],
+    [scheme, preference, setPreference],
   );
 
   return (

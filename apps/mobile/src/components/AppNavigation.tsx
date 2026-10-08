@@ -1,12 +1,14 @@
-import { Icon, Text, useTheme, type IconName } from '@wellness/ui';
+import { Icon, Text, useBounce, useTheme, type IconName } from '@wellness/ui';
 import { TabList, TabSlot, TabTrigger, Tabs, type TabTriggerSlotProps } from 'expo-router/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, View, type View as RNView } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useVisibleModules } from '@/features/profile';
 import { useLayout, type LayoutSize } from '@/hooks/useLayout';
+import { tapFeedback } from '@/lib/haptics';
 
 interface NavEntry {
   name: string;
@@ -113,7 +115,13 @@ const NavItem = forwardRef<RNView, NavItemProps>(function NavItem(
   ref,
 ) {
   const { colors } = useTheme();
+  const bounce = useBounce(!!isFocused);
   if (hidden) return null;
+
+  const onPress: typeof props.onPress = (e) => {
+    if (!isFocused) tapFeedback();
+    props.onPress?.(e);
+  };
 
   const iconColor = isFocused ? (entry.color ?? colors.primary) : colors.textMuted;
   const a11y = {
@@ -128,9 +136,12 @@ const NavItem = forwardRef<RNView, NavItemProps>(function NavItem(
         ref={ref}
         {...props}
         {...a11y}
+        onPress={onPress}
         className={`min-h-touch flex-row items-center gap-3 rounded-md px-3 ${isFocused ? 'bg-surface-muted' : ''}`}
       >
-        <Icon name={entry.icon} size={22} color={iconColor} />
+        <Animated.View style={bounce}>
+          <Icon name={entry.icon} size={22} color={iconColor} />
+        </Animated.View>
         <Text variant="label" tone={isFocused ? 'default' : 'muted'}>
           {entry.label}
         </Text>
@@ -143,12 +154,15 @@ const NavItem = forwardRef<RNView, NavItemProps>(function NavItem(
       ref={ref}
       {...props}
       {...a11y}
+      onPress={onPress}
       className={`min-h-touch flex-col items-center justify-center gap-1 rounded-md py-1 ${layout === 'phone' ? 'flex-1' : 'w-[72px] py-2'} ${isFocused && layout === 'tablet' ? 'bg-surface-muted' : ''}`}
     >
       <View
         className={`rounded-full px-4 py-1 ${isFocused && layout === 'phone' ? 'bg-surface-muted' : ''}`}
       >
-        <Icon name={entry.icon} size={24} color={iconColor} />
+        <Animated.View style={bounce}>
+          <Icon name={entry.icon} size={24} color={iconColor} />
+        </Animated.View>
       </View>
       <Text variant="caption" tone={isFocused ? 'default' : 'muted'} numberOfLines={1}>
         {entry.label}

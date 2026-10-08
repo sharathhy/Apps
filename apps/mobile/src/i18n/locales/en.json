@@ -17,6 +17,14 @@
       "title": "Mood",
       "description": "Check-ins, breathing and journaling"
     },
+    "sleep": {
+      "title": "Sleep",
+      "description": "Bedtime, wake time and sleep quality"
+    },
+    "activity": {
+      "title": "Activity",
+      "description": "Steps, active minutes and daily goals"
+    },
     "cycle": {
       "title": "Cycle",
       "description": "Periods, symptoms and predictions"
@@ -34,7 +42,15 @@
     "greeting": "Welcome",
     "subtitle": "Your trackers",
     "open": "Open {{module}}",
-    "comingSoon": "Coming in phase {{phase}}"
+    "comingSoon": "Coming in phase {{phase}}",
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening",
+    "activeTrackers": "{{count}} of {{total}} trackers on",
+    "activeTrackersHint": "Change which trackers you see in Settings",
+    "themeToDark": "Switch to dark theme",
+    "themeToLight": "Switch to light theme",
+    "language": "Change language"
   },
   "module": {
     "placeholderTitle": "{{module}} is being built",
@@ -118,5 +134,12 @@
     "emptyMessage": "Turn on trackers in Settings to see them here.",
     "openSettings": "Open Settings",
     "show": "Show {{module}}"
+  },
+  "install": {
+    "title": "Install the app",
+    "description": "Add Wellness to your home screen or desktop. It opens like an app and works offline.",
+    "button": "Install app",
+    "ios": "On iPhone or iPad, tap Share, then Add to Home Screen.",
+    "installed": "Installed on this device"
   }
 }

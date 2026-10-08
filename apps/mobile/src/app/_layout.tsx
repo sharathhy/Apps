@@ -1,5 +1,5 @@
 import '../global.css';
-import '@/i18n';
+import i18n, { detectLanguage } from '@/i18n';
 
 import {
   Inter_400Regular,
@@ -33,10 +33,18 @@ export default function RootLayout() {
   });
   const profileReady = useProfile((s) => s.hydrated);
   const ready = (fontsLoaded || !!fontError) && profileReady;
+  const theme = useProfile((s) => s.theme);
+  const setTheme = useProfile((s) => s.setTheme);
+
+  const language = useProfile((s) => s.language);
 
   useEffect(() => {
     void useProfile.persist.rehydrate();
   }, []);
+
+  useEffect(() => {
+    if (profileReady) void i18n.changeLanguage(language ?? detectLanguage());
+  }, [language, profileReady]);
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
@@ -47,7 +55,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <ThemeProvider>
+        <ThemeProvider preference={theme} onPreferenceChange={setTheme}>
           <ThemedNavigation />
         </ThemeProvider>
       </SafeAreaProvider>

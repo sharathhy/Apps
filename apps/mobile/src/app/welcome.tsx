@@ -1,8 +1,9 @@
-import { Button, Card, Screen, Text } from '@wellness/ui';
+import { Appear, Button, Card, Screen, Text } from '@wellness/ui';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { QuickToggles } from '@/components/QuickToggles';
 import { useProfile, type Audience } from '@/features/profile';
 import { AudiencePicker } from '@/features/profile/components/AudiencePicker';
 import { TrackerToggles } from '@/features/profile/components/TrackerToggles';
@@ -19,24 +20,33 @@ export default function WelcomeScreen() {
 
   return (
     <Screen>
-      <View className="gap-2">
-        <Text variant="display">{t('setup.title')}</Text>
-        <Text variant="bodyLarge" tone="muted">
-          {t('setup.subtitle')}
-        </Text>
-      </View>
+      <Appear>
+        <View className="flex-row justify-end">
+          <QuickToggles />
+        </View>
+      </Appear>
+      <Appear index={1}>
+        <View className="gap-2">
+          <Text variant="display">{t('setup.title')}</Text>
+          <Text variant="bodyLarge" tone="muted">
+            {t('setup.subtitle')}
+          </Text>
+        </View>
+      </Appear>
 
-      <AudiencePicker value={audience} onChange={choose} />
+      <Appear index={2}>
+        <AudiencePicker value={audience} onChange={choose} />
+      </Appear>
 
       {audience ? (
-        <View className="gap-2">
+        <Appear key={audience} style={{ gap: 8 }}>
           <Text variant="label" tone="muted" accessibilityRole="header">
             {t('setup.trackersTitle')}
           </Text>
           <Card>
             <TrackerToggles />
           </Card>
-        </View>
+        </Appear>
       ) : null}
 
       <Text variant="footnote" tone="muted">

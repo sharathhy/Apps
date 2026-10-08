@@ -16,3 +16,5 @@ export { Text, type TextProps, type TextTone } from './components/Text';
 export { useMotion } from './motion/useMotion';
 export { AccentScope } from './theme/AccentScope';
 export { ThemeProvider, useTheme, type ThemePreference } from './theme/ThemeProvider';
+export { Appear } from './motion/Appear';
+export { useBounce } from './motion/useBounce';
