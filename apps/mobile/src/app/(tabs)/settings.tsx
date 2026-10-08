@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
 import { ListRow } from '@/components/ListRow';
+import { audiences, useProfile, type Audience } from '@/features/profile';
+import { TrackerToggles } from '@/features/profile/components/TrackerToggles';
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
 import { SegmentedControl } from '@/components/SegmentedControl';
 import { supportedLanguages, type Language } from '@/i18n';
@@ -15,10 +17,28 @@ export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const { preference, setPreference } = useTheme();
   const region = regionDefaults(getLocales()[0]?.regionCode);
+  const audience = useProfile((s) => s.audience) ?? 'everyone';
+  const chooseAudience = useProfile((s) => s.chooseAudience);
 
   return (
     <Screen>
       <Text variant="title1">{t('settings.title')}</Text>
+
+      <Section title={t('myTrackers.title')}>
+        <Text variant="footnote" tone="muted">
+          {t('myTrackers.setupFor')}
+        </Text>
+        <SegmentedControl<Audience>
+          label={t('myTrackers.setupFor')}
+          value={audience}
+          onChange={chooseAudience}
+          options={audiences.map((value) => ({
+            value,
+            label: t(`setup.audience.${value}.short`),
+          }))}
+        />
+        <TrackerToggles />
+      </Section>
 
       <Section title={t('settings.appearance')}>
         <SegmentedControl<ThemePreference>

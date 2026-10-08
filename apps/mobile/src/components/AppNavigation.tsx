@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable, View, type View as RNView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { getEnabledModules, phoneTabModules } from '@/features/registry';
+import { useVisibleModules } from '@/features/profile';
 import { useLayout, type LayoutSize } from '@/hooks/useLayout';
 
 interface NavEntry {
@@ -21,18 +21,19 @@ interface NavEntry {
 /**
  * Responsive app navigation. Phones get a bottom tab bar (home, up to three
  * modules, settings); tablets and desktop web get a side rail with every
- * enabled module. Every enabled module is always registered as a tab so
+ * module the user has chosen. Every chosen module is registered as a tab so
  * links from the home screen work on all sizes.
  */
 export function AppNavigation() {
   const layout = useLayout();
   const { t } = useTranslation();
   const { accents } = useTheme();
-  const phoneIds = new Set(phoneTabModules().map((m) => m.id));
+  const modules = useVisibleModules();
+  const phoneIds = new Set(modules.slice(0, 3).map((m) => m.id));
 
   const entries: NavEntry[] = [
     { name: 'index', href: '/', icon: 'home', label: t('nav.home'), phone: true },
-    ...getEnabledModules().map((m) => ({
+    ...modules.map((m) => ({
       name: m.id,
       href: `/${m.id}` as const,
       icon: m.icon,

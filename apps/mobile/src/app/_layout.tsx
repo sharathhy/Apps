@@ -18,6 +18,7 @@ import {
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -30,7 +31,12 @@ export default function RootLayout() {
     Inter_600SemiBold,
     Inter_700Bold,
   });
-  const ready = fontsLoaded || !!fontError;
+  const profileReady = useProfile((s) => s.hydrated);
+  const ready = (fontsLoaded || !!fontError) && profileReady;
+
+  useEffect(() => {
+    void useProfile.persist.rehydrate();
+  }, []);
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
@@ -71,6 +77,7 @@ function ThemedNavigation() {
         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}
       >
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="welcome" options={{ gestureEnabled: false }} />
         <Stack.Screen
           name="legal/[doc]"
           options={{ headerShown: true, presentation: 'modal', headerTitle: '' }}

@@ -84,5 +84,39 @@
   "notFound": {
     "title": "Page not found",
     "back": "Go to home"
+  },
+  "setup": {
+    "title": "Who is this for?",
+    "subtitle": "We will show the trackers that fit you. You can change this any time in Settings.",
+    "audience": {
+      "women": {
+        "title": "Women's health",
+        "description": "Cycle, pregnancy, water, mood and nutrition",
+        "short": "Women"
+      },
+      "men": {
+        "title": "Men's health",
+        "description": "Water, mood and nutrition",
+        "short": "Men"
+      },
+      "everyone": {
+        "title": "Show everything",
+        "description": "Every tracker in the app",
+        "short": "Everyone"
+      }
+    },
+    "trackersTitle": "Your trackers",
+    "continue": "Continue",
+    "skip": "Skip and show everything",
+    "privacy": "Saved only on this device. It is used only to choose which trackers you see.",
+    "noneSelected": "Choose at least one tracker"
+  },
+  "myTrackers": {
+    "title": "My trackers",
+    "setupFor": "Set up for",
+    "empty": "No trackers selected",
+    "emptyMessage": "Turn on trackers in Settings to see them here.",
+    "openSettings": "Open Settings",
+    "show": "Show {{module}}"
   }
 }

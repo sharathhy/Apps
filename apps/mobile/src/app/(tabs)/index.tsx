@@ -14,13 +14,13 @@ import { useTranslation } from 'react-i18next';
 import { useWindowDimensions, View } from 'react-native';
 
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
-import { getEnabledModules } from '@/features/registry';
+import { useVisibleModules } from '@/features/profile';
 import type { ModuleManifest } from '@/features/types';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
-  const modules = getEnabledModules();
+  const modules = useVisibleModules();
   const twoColumns = width >= breakpoints.tablet;
 
   return (
@@ -38,7 +38,13 @@ export default function HomeScreen() {
 
       {modules.length === 0 ? (
         <Card>
-          <EmptyState icon="sparkles" title={t('home.subtitle')} message={t('app.tagline')} />
+          <EmptyState
+            icon="sparkles"
+            title={t('myTrackers.empty')}
+            message={t('myTrackers.emptyMessage')}
+            actionLabel={t('myTrackers.openSettings')}
+            onAction={() => router.navigate('/settings')}
+          />
         </Card>
       ) : (
         <View className="flex-row flex-wrap gap-3">

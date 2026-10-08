@@ -26,7 +26,7 @@ describe('Button', () => {
   it('is labelled and pressable', async () => {
     const onPress = jest.fn();
     await render(<Button label="Save" onPress={onPress} />);
-    fireEvent.press(screen.getByRole('button', { name: 'Save' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Save' }));
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
@@ -35,7 +35,7 @@ describe('Button', () => {
     await render(<Button label="Save" loading onPress={onPress} />);
     const button = screen.getByRole('button', { name: 'Save' });
     expect(button.props.accessibilityState).toMatchObject({ disabled: true, busy: true });
-    fireEvent.press(button);
+    await fireEvent.press(button);
     expect(onPress).not.toHaveBeenCalled();
   });
 });
