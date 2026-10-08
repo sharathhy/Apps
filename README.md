@@ -105,4 +105,4 @@ This app does not provide medical advice, diagnosis, or treatment. Consult a qua
 2. Choose **Add New → Project**, import `sharathhy/Apps`, and leave every setting at its default.
 3. Click **Deploy**. Every push gets a preview URL; pushes to the production branch update the live site.
 
-Hobby plan limits: 100 GB bandwidth and 6,000 build minutes per month, for non-commercial use. A commercial launch needs the Pro plan or Netlify's free tier, so ask before switching.
+The Hobby plan is free for personal, non-commercial projects and includes 100 GB of bandwidth per month. Check current limits at vercel.com/pricing. A commercial launch needs the Pro plan or Netlify's free tier, so ask before switching.
