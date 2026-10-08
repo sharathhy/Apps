@@ -1,0 +1,5 @@
+{
+  "extends": "@wellness/config/tsconfig.base.json",
+  "compilerOptions": { "types": ["jest", "node"] },
+  "include": ["tests"]
+}
