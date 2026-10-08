@@ -8,12 +8,11 @@ import type { ModuleId } from '@wellness/design-tokens';
  * shows the first three enabled modules; the rest are reachable from home.
  */
 export const modulesConfig: { order: ModuleId[]; enabled: Record<ModuleId, boolean> } = {
-  order: ['water', 'mood', 'sleep', 'activity', 'cycle', 'pregnancy', 'nutrition'],
+  order: ['water', 'mood', 'sleep', 'cycle', 'pregnancy', 'nutrition'],
   enabled: {
     water: true,
     mood: true,
     sleep: true,
-    activity: true,
     cycle: true,
     pregnancy: true,
     nutrition: true,

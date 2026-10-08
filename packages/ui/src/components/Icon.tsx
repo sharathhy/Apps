@@ -21,7 +21,6 @@ export const icons = {
   },
   nutrition: { ios: 'fork.knife', android: 'restaurant', web: 'restaurant' },
   sleep: { ios: 'moon.zzz', android: 'bedtime', web: 'bedtime' },
-  activity: { ios: 'figure.walk', android: 'directions_walk', web: 'directions_walk' },
   language: { ios: 'globe', android: 'language', web: 'language' },
   darkMode: { ios: 'moon', android: 'dark_mode', web: 'dark_mode' },
   lightMode: { ios: 'sun.max', android: 'light_mode', web: 'light_mode' },

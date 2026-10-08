@@ -8,14 +8,12 @@ import { nutritionModule } from './nutrition/manifest';
 import { pregnancyModule } from './pregnancy/manifest';
 import type { ModuleManifest } from './types';
 import { sleepModule } from './sleep/manifest';
-import { activityModule } from './activity/manifest';
 import { waterModule } from './water/manifest';
 
 export const allModules: Record<ModuleId, ModuleManifest> = {
   water: waterModule,
   mood: moodModule,
   sleep: sleepModule,
-  activity: activityModule,
   cycle: cycleModule,
   pregnancy: pregnancyModule,
   nutrition: nutritionModule,

@@ -21,10 +21,6 @@
       "title": "Sleep",
       "description": "Bedtime, wake time and sleep quality"
     },
-    "activity": {
-      "title": "Activity",
-      "description": "Steps, active minutes and daily goals"
-    },
     "cycle": {
       "title": "Cycle",
       "description": "Periods, symptoms and predictions"

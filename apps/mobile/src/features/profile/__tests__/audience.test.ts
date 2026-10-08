@@ -6,26 +6,26 @@ describe('availableTrackers', () => {
     expect(availableTrackers('men')).not.toContain('pregnancy');
   });
 
-  it('offers sleep and activity to both women and men', () => {
+  it('offers sleep to both women and men', () => {
     for (const audience of ['women', 'men', 'everyone'] as const) {
-      expect(availableTrackers(audience)).toEqual(expect.arrayContaining(['sleep', 'activity']));
+      expect(availableTrackers(audience)).toEqual(expect.arrayContaining(['sleep']));
     }
   });
 
   it('offers every tracker to women and everyone', () => {
-    expect(availableTrackers('women')).toHaveLength(7);
-    expect(availableTrackers('everyone')).toHaveLength(7);
+    expect(availableTrackers('women')).toHaveLength(6);
+    expect(availableTrackers('everyone')).toHaveLength(6);
   });
 });
 
 describe('defaultTrackers', () => {
   it('turns on the general trackers for men only', () => {
-    expect(defaultTrackers('men')).toEqual(['water', 'mood', 'sleep', 'activity', 'nutrition']);
+    expect(defaultTrackers('men')).toEqual(['water', 'mood', 'sleep', 'nutrition']);
   });
 
   it('turns on cycle and pregnancy for women', () => {
     expect(defaultTrackers('women')).toEqual(
-      expect.arrayContaining(['cycle', 'pregnancy', 'sleep', 'activity']),
+      expect.arrayContaining(['cycle', 'pregnancy', 'sleep']),
     );
   });
 

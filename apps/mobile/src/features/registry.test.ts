@@ -6,7 +6,6 @@ const allOn: Record<ModuleId, boolean> = {
   water: true,
   mood: true,
   sleep: true,
-  activity: true,
   cycle: true,
   pregnancy: true,
   nutrition: true,

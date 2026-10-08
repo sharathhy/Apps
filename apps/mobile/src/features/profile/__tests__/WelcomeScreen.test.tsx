@@ -17,7 +17,6 @@ describe('WelcomeScreen', () => {
     expect(useProfile.getState().audience).toBe('men');
     expect(screen.getByLabelText('Show Water').props.value).toBe(true);
     expect(screen.getByLabelText('Show Sleep').props.value).toBe(true);
-    expect(screen.getByLabelText('Show Activity').props.value).toBe(true);
     // Women-only trackers are not offered to men at all.
     expect(screen.queryByLabelText('Show Cycle')).toBeNull();
     expect(screen.queryByLabelText('Show Pregnancy')).toBeNull();

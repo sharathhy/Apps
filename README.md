@@ -1,6 +1,6 @@
 # Wellness suite
 
-A suite of health and wellness trackers built as one React Native (Expo) app for Android, iOS and the web. It has seven modules (Water, Mood, Sleep, Activity, Cycle, Pregnancy and Nutrition) with a shared design system. Each module can be turned on or off in a config file.
+A suite of health and wellness trackers built as one React Native (Expo) app for Android, iOS and the web. It has six modules (Water, Mood, Sleep, Cycle, Pregnancy and Nutrition) with a shared design system. Each module can be turned on or off in a config file.
 
 On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 

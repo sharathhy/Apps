@@ -10,13 +10,7 @@ describe('profile store', () => {
 
   it('applies men defaults and never allows cycle for men', () => {
     useProfile.getState().chooseAudience('men');
-    expect(useProfile.getState().trackers).toEqual([
-      'water',
-      'mood',
-      'sleep',
-      'activity',
-      'nutrition',
-    ]);
+    expect(useProfile.getState().trackers).toEqual(['water', 'mood', 'sleep', 'nutrition']);
     useProfile.getState().toggleTracker('cycle');
     expect(useProfile.getState().trackers).not.toContain('cycle');
     useProfile.getState().toggleTracker('sleep');
