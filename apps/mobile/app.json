@@ -47,7 +47,13 @@
         }
       ],
       "expo-localization",
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Use Face ID to unlock your private wellness data."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

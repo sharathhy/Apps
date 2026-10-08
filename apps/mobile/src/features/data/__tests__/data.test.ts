@@ -30,6 +30,7 @@ describe('data export', () => {
 
     expect(Object.keys(device).sort()).toEqual([
       'achievements',
+      'appLock',
       'consent',
       'mood',
       'notificationCenter',

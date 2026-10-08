@@ -6,6 +6,7 @@ import { useReminders } from '@/features/notifications/remindersStore';
 import { useProfile } from '@/features/profile/store';
 import { useMood } from '@/features/mood/store';
 import { useRequirements } from '@/features/requirements/store';
+import { useAppLock } from '@/features/security/store';
 import { useSleep } from '@/features/sleep/store';
 import { useWater } from '@/features/water/store';
 
@@ -25,6 +26,7 @@ export const persistedStores = {
   water: useWater,
   mood: useMood,
   sleep: useSleep,
+  appLock: useAppLock,
 } as const;
 
 export type PersistedStoreKey = keyof typeof persistedStores;

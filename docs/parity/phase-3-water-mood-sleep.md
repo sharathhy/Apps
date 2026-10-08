@@ -1,6 +1,6 @@
 # Parity checklist: Water, Mood and Sleep (Phase 3)
 
-Features commonly found in popular water, mood and sleep trackers, and whether this app will have them. "Planned" items are built in Phase 3 unless noted. Items marked **Your call** are common elsewhere but not in the spec; they are not built unless you ask.
+Features commonly found in popular water, mood and sleep trackers, and whether this app has them. **Status after Phase 3:** every "Planned" item is built except the home-screen widget, which needs a native build and comes with the Phase 7 store builds. Items marked **Your call** are common elsewhere but not in the spec; they are not built unless you ask.
 
 ## Water
 

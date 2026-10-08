@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { fetchServerData } from '@/features/account/api';
 import { buildExport, collectDeviceData, saveExport } from '@/features/data/export';
+import { AppLockRow } from '@/features/security/AppLockRow';
 
 import { ListRow } from './ListRow';
 
@@ -26,6 +27,7 @@ export function DataControls() {
 
   return (
     <>
+      <AppLockRow />
       <ListRow
         icon="shield"
         label={t('dataControls.consents')}

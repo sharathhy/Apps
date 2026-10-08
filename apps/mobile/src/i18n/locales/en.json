@@ -704,5 +704,14 @@
       "message": "A gentle note before bed, at a time you choose.",
       "set": "Set a reminder"
     }
+  },
+  "appLock": {
+    "title": "App lock",
+    "description": "Ask for your fingerprint, face or device PIN when opening the app.",
+    "prompt": "Unlock Wellness",
+    "locked": "Wellness is locked",
+    "unlock": "Unlock",
+    "tryAgain": "That didn't work. Try again.",
+    "unavailable": "Set up a screen lock on this device first."
   }
 }

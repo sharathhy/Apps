@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import { watchSession } from '@/features/account/session';
 import { rehydrateAll } from '@/features/data/stores';
 import { startNotificationService } from '@/features/notifications/service';
+import { AppLockGate } from '@/features/security/AppLockGate';
 import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -64,7 +65,9 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider preference={theme} onPreferenceChange={setTheme}>
-          <ThemedNavigation />
+          <AppLockGate>
+            <ThemedNavigation />
+          </AppLockGate>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
