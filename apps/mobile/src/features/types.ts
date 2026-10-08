@@ -8,4 +8,6 @@ export interface ModuleManifest {
   href: Href;
   /** Build phase in which the module ships. */
   plannedPhase: number;
+  /** True once the tracker is built and no longer a placeholder. */
+  ready?: boolean;
 }

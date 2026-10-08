@@ -5,4 +5,5 @@ export const waterModule: ModuleManifest = {
   icon: 'water',
   href: '/water',
   plannedPhase: 3,
+  ready: true,
 };

@@ -137,9 +137,11 @@ function ModuleCard({ module }: { module: ModuleManifest }) {
           <View className="flex-1 gap-1">
             <Text variant="title3">{title}</Text>
             <Text variant="footnote">{t(`modules.${module.id}.description`)}</Text>
-            <Text variant="caption" tone="accent">
-              {t('home.comingSoon', { phase: module.plannedPhase })}
-            </Text>
+            {module.ready ? null : (
+              <Text variant="caption" tone="accent">
+                {t('home.comingSoon', { phase: module.plannedPhase })}
+              </Text>
+            )}
           </View>
           <Icon name="chevronRight" size={18} />
         </Card>

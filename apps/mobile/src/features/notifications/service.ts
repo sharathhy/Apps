@@ -8,6 +8,8 @@ import { activeModules } from '@/features/profile/activeModules';
 import { useProfile } from '@/features/profile/store';
 import { missingRequirements, nextRequirementNotice } from '@/features/requirements/definitions';
 import { useRequirements } from '@/features/requirements/store';
+import { totalForDay } from '@/features/water/model';
+import { useWater } from '@/features/water/store';
 import i18n from '@/i18n';
 import { supabase } from '@/lib/supabase';
 import { deviceTimeZone } from '@/lib/time/device';
@@ -28,11 +30,40 @@ import {
 import { useInbox } from './inboxStore';
 import { planNotifications, type Plan } from './planner';
 import { useNotificationPrefs } from './prefsStore';
-import type { ReminderKind } from './reminders';
+import type { Reminder, ReminderKind } from './reminders';
 import { useReminders } from './remindersStore';
+import { endOfLocalDay, spreadTimes } from './smart';
 import { snoozeOptions, snoozeUntil, type SnoozeOption } from './snooze';
 
 const REQUIREMENT_REMINDER_ID = 'requirement';
+export const WATER_SMART_ID = 'water-smart';
+/** Smart water reminders wait this long after a drink is logged. */
+const SMART_GAP_MS = 60 * 60_000;
+const SMART_COUNT = 5;
+
+/** Smart water reminders and when they should hold back (recent drink or goal met). */
+function waterSmart(now: Date, timeZone: string) {
+  const water = useWater.getState();
+  if (!water.smartReminders) return { reminders: [] as Reminder[], hold: undefined };
+  const reminder: Reminder = {
+    id: WATER_SMART_ID,
+    module: 'water',
+    kind: 'smart',
+    templateKey: 'water.drink',
+    times: spreadTimes(water.activeStart, water.activeEnd, SMART_COUNT),
+    weekdays: [],
+    timezone: timeZone,
+    enabled: true,
+    snoozedUntil: water.smartSnoozedUntil,
+    updatedAt: now.toISOString(),
+  };
+  const today = localDateKey(now, timeZone);
+  const goal = useRequirements.getState().waterGoalMl;
+  const last = water.entries[0] ? new Date(water.entries[0].at).getTime() + SMART_GAP_MS : 0;
+  const goalMet = goal !== null && totalForDay(water.entries, today) >= goal;
+  const holdMs = Math.max(last, goalMet ? endOfLocalDay(now, timeZone).getTime() : 0);
+  return { reminders: [reminder], hold: holdMs > now.getTime() ? new Date(holdMs) : undefined };
+}
 
 /**
  * Re-plans every local notification and hands the result to the OS. Safe to
@@ -55,8 +86,10 @@ export async function syncSchedule(now = new Date()): Promise<Plan> {
     timeZone,
   });
 
+  const smart = waterSmart(now, timeZone);
   const plan = planNotifications({
-    reminders: useReminders.getState().reminders,
+    reminders: [...useReminders.getState().reminders, ...smart.reminders],
+    smartHoldUntil: smart.hold ? { water: smart.hold } : undefined,
     prefs,
     now,
     timeZone,
@@ -91,6 +124,10 @@ export async function syncSchedule(now = new Date()): Promise<Plan> {
 }
 
 export function snoozeReminder(reminderId: string, option: SnoozeOption, now = new Date()) {
+  if (reminderId === WATER_SMART_ID) {
+    useWater.getState().snoozeSmart(snoozeUntil(option, now, deviceTimeZone()));
+    return;
+  }
   const reminders = useReminders.getState();
   if (!reminders.reminders.some((r) => r.id === reminderId)) return;
   reminders.snooze(reminderId, snoozeUntil(option, now, deviceTimeZone()), now);
@@ -217,7 +254,7 @@ export function startNotificationService(): () => void {
   for (const store of [useReminders, useNotificationPrefs, useAchievements]) {
     cleanups.push(store.subscribe(onDataChange));
   }
-  for (const store of [useProfile, useConsent, useRequirements]) {
+  for (const store of [useProfile, useConsent, useRequirements, useWater]) {
     cleanups.push(store.subscribe(scheduleSync));
   }
 

@@ -35,6 +35,11 @@ export interface PlanInput {
   visibleModules: readonly ModuleId[];
   /** One-off notices (e.g. a requirement reminder) planned elsewhere. */
   oneOffs?: Omit<PlannedNotification, 'key' | 'snoozed'>[];
+  /**
+   * Smart reminders of a tracker are held back until this instant, e.g. an
+   * hour after the last drink, or the end of the day once the goal is met.
+   */
+  smartHoldUntil?: Partial<Record<ModuleId, Date>>;
   /** Notifications already shown per local date ("YYYY-MM-DD"); they count toward the limit. */
   shownPerDay?: Record<string, number>;
   horizonDays?: number;
@@ -126,6 +131,11 @@ export function planNotifications(input: PlanInput): Plan {
         if (fireAt <= now) continue;
         // Snoozing means "not now": regular times before the snooze end are dropped.
         if (snoozeActive && fireAt <= snoozedUntil) continue;
+        const hold =
+          reminder.kind === 'smart' && reminder.module
+            ? input.smartHoldUntil?.[reminder.module]
+            : undefined;
+        if (hold && fireAt < hold) continue;
         const item = {
           ...base,
           key: `${reminder.id}@${fireAt.toISOString()}`,

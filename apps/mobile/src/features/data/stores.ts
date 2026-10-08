@@ -5,6 +5,7 @@ import { useNotificationPrefs } from '@/features/notifications/prefsStore';
 import { useReminders } from '@/features/notifications/remindersStore';
 import { useProfile } from '@/features/profile/store';
 import { useRequirements } from '@/features/requirements/store';
+import { useWater } from '@/features/water/store';
 
 /**
  * Every persisted on-device store, by its storage key. Used to rehydrate at
@@ -19,6 +20,7 @@ export const persistedStores = {
   notificationCenter: useInbox,
   achievements: useAchievements,
   setupDetails: useRequirements,
+  water: useWater,
 } as const;
 
 export type PersistedStoreKey = keyof typeof persistedStores;

@@ -17,7 +17,7 @@ import { tapFeedback } from '@/lib/haptics';
 
 import { useInbox, type InboxItem } from '../inboxStore';
 import { useReminders } from '../remindersStore';
-import { snoozeReminder } from '../service';
+import { snoozeReminder, WATER_SMART_ID } from '../service';
 import { snoozeOptions } from '../snooze';
 
 const typeIcon: Record<InboxItem['type'], IconName> = {
@@ -122,7 +122,7 @@ export function NotificationCenterScreen() {
                   </View>
                 </Pressable>
                 <View className="flex-row flex-wrap justify-end gap-1">
-                  {reminder ? (
+                  {reminder || item.reminderId === WATER_SMART_ID ? (
                     <>
                       {snoozeOptions.map((option) => (
                         <Button
@@ -130,7 +130,7 @@ export function NotificationCenterScreen() {
                           variant="ghost"
                           label={`${t('notifications.snooze.title')}: ${t(`notifications.snooze.${option}`)}`}
                           onPress={() => {
-                            snoozeReminder(reminder.id, option);
+                            snoozeReminder(item.reminderId!, option);
                             markRead(item.id);
                           }}
                         />

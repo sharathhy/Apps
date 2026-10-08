@@ -188,3 +188,26 @@ describe('snoozeUntil', () => {
     );
   });
 });
+
+describe('smart reminders', () => {
+  it('spreads times across waking hours', () => {
+    const { spreadTimes } = jest.requireActual('../smart') as typeof import('../smart');
+    expect(spreadTimes('09:00', '21:00', 5)).toEqual(['09:00', '12:00', '15:00', '18:00', '21:00']);
+    expect(spreadTimes('22:00', '02:00', 3)).toEqual(['22:00', '00:00', '02:00']);
+  });
+
+  it('holds smart reminders back, but never scheduled ones', () => {
+    const smart = reminder({ id: 's', kind: 'smart', times: ['09:00', '12:00', '15:00'] });
+    const fixed = reminder({ id: 'f', times: ['12:30'] });
+    const p = plan({
+      reminders: [smart, fixed],
+      horizonDays: 0,
+      prefs: { ...prefs, dailyLimit: 5 },
+      smartHoldUntil: { water: new Date('2026-10-08T07:00:00Z') }, // 12:30 IST
+    });
+    expect(p.planned.map((n) => [n.reminderId, local(n.fireAt, 'Asia/Kolkata')])).toEqual([
+      ['f', '12:30'],
+      ['s', '15:00'],
+    ]);
+  });
+});

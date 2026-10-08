@@ -36,6 +36,7 @@ describe('data export', () => {
       'profile',
       'reminders',
       'setupDetails',
+      'water',
     ]);
     expect(device.profile).toMatchObject({ audience: 'women' });
     expect(device.consent).toMatchObject({ records: { cycle: { granted: true } } });

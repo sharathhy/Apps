@@ -210,7 +210,7 @@
     },
     "smart": {
       "title": "Smart timing",
-      "why": "Moves reminders to your active hours and pauses them during quiet hours."
+      "why": "Water reminders spread across your waking hours, which wait after a drink and stop once you reach your goal."
     },
     "achievement": {
       "title": "Achievements",
@@ -501,6 +501,48 @@
       "why": "Your due date sets the week-by-week content and your appointment timeline.",
       "label": "Estimated due date ({{pattern}})",
       "guidance": "Your doctor or midwife can confirm your due date, usually from an early scan."
+    }
+  },
+  "water": {
+    "subtitle": "Every drink counts toward your day",
+    "progress": "{{total}} of your {{goal}} goal today",
+    "totalToday": "{{total}} today",
+    "ofGoal": "of your {{goal}} goal",
+    "noGoal": "Set a goal to see your progress",
+    "goalReached": "You reached your goal today",
+    "drinkType": "Drink",
+    "drinks": {
+      "water": "Water",
+      "tea": "Tea",
+      "coffee": "Coffee",
+      "milk": "Milk",
+      "juice": "Juice",
+      "coconutWater": "Coconut water",
+      "buttermilk": "Buttermilk",
+      "other": "Other"
+    },
+    "quickAdd": "Quick add",
+    "addAmount": "Add {{amount}} of {{drink}}",
+    "customAmount": "Other amount ({{unit}})",
+    "customError": "Enter an amount up to 5 litres",
+    "add": "Add",
+    "removed": "Entry removed",
+    "undo": "Undo",
+    "today": "Today",
+    "delete": "Delete",
+    "deleteEntry": "Delete {{amount}} of {{drink}}",
+    "setGoal": "Set a daily goal",
+    "changeGoal": "Change daily goal",
+    "history": "History",
+    "week": "Week",
+    "month": "30 days",
+    "chartSummary": "Last {{days}} days: {{logged}} days logged, {{average}} on average on those days",
+    "smart": {
+      "title": "Smart reminders",
+      "description": "Spread across your waking hours. They wait an hour after a drink and stop once you reach your goal.",
+      "from": "Waking hours from",
+      "until": "Until",
+      "needsPermission": "To receive them, turn on notifications and the Smart timing type in notification settings."
     }
   }
 }
