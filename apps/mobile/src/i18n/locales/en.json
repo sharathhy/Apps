@@ -76,7 +76,9 @@
     "privacy": "Privacy policy",
     "terms": "Terms of service",
     "disclaimer": "Medical disclaimer",
-    "version": "Version {{version}}"
+    "version": "Version {{version}}",
+    "notifications": "Notifications",
+    "achievements": "Achievements"
   },
   "legal": {
     "englishOnly": "The legal documents are drafts awaiting legal review and are shown in English only for now."
@@ -266,5 +268,239 @@
     "deleting": "Deleting",
     "deleteFailed": "We could not delete your account. Nothing was removed. Check your connection and try again.",
     "cancel": "Cancel"
+  },
+  "notificationText": {
+    "private": "Time for your check-in",
+    "privateUpdate": "You have a new update in Wellness",
+    "requirementInbox": "A quick detail would help this tracker work for you",
+    "templates": {
+      "general": "Time for your check-in",
+      "water": {
+        "drink": "Time for a glass of water"
+      },
+      "mood": {
+        "checkIn": "A quick mood check-in is ready when you are"
+      },
+      "sleep": {
+        "windDown": "Time to start winding down"
+      },
+      "cycle": {
+        "log": "Time for your check-in"
+      },
+      "pregnancy": {
+        "log": "Time for your check-in"
+      },
+      "nutrition": {
+        "log": "Time to note your meal"
+      },
+      "requirement": {
+        "waterGoal": "Add your water goal whenever you're ready",
+        "lastPeriod": "Add your last period date whenever you're ready",
+        "dueDate": "Add your due date whenever you're ready"
+      }
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "open": "Open notifications, {{count}} unread",
+    "emptyTitle": "Nothing here yet",
+    "emptyMessage": "Reminders, badges and notices will appear here.",
+    "markAllRead": "Mark all as read",
+    "settings": "Notification settings",
+    "unread": "Unread",
+    "dismiss": "Remove",
+    "snooze": {
+      "title": "Snooze",
+      "10m": "10 minutes",
+      "1h": "1 hour",
+      "tomorrow": "Tomorrow"
+    },
+    "snoozed": "Snoozed until {{time}}",
+    "types": {
+      "system": "Notice"
+    },
+    "prefs": {
+      "master": "Allow notifications",
+      "masterHint": "Everything stays off until you turn it on, and you choose each type below.",
+      "willReceive": "When you turn this on, your device will ask for permission. You will only get the types you switch on.",
+      "typesTitle": "Types",
+      "modulesTitle": "Trackers",
+      "quietTitle": "Quiet hours",
+      "quietHint": "No notifications between these times.",
+      "from": "From",
+      "until": "Until",
+      "earlier": "Earlier",
+      "later": "Later",
+      "limitTitle": "Daily limit",
+      "limitValue": "At most {{count}} a day",
+      "fewer": "Fewer",
+      "more": "More",
+      "privacyTitle": "Lock screen privacy",
+      "privacyHint": "Notifications only say “Time for your check-in”, never details.",
+      "systemTitle": "System notices",
+      "systemHint": "Account and security messages. They can't be turned off and appear in the notification center.",
+      "alwaysOn": "Always on",
+      "blocked": "Notifications are blocked in your device settings.",
+      "openSettings": "Open device settings",
+      "webNote": "In the web app, reminders and badges appear in the notification center. Device notifications are available in the Android and iOS apps."
+    },
+    "reminders": {
+      "title": "Reminders",
+      "add": "Add reminder",
+      "empty": "No reminders yet.",
+      "everyDay": "Every day",
+      "new": "New reminder",
+      "edit": "Edit reminder",
+      "tracker": "Tracker",
+      "times": "Times",
+      "addTime": "Add time",
+      "removeTime": "Remove {{time}}",
+      "hourUp": "Later by an hour",
+      "hourDown": "Earlier by an hour",
+      "minuteUp": "Later by 15 minutes",
+      "minuteDown": "Earlier by 15 minutes",
+      "days": "Days",
+      "save": "Save",
+      "delete": "Delete reminder",
+      "on": "Reminder on",
+      "insideQuiet": "{{time}} is inside quiet hours, so it won't be sent.",
+      "needsTime": "Add at least one time.",
+      "offNote": "Reminders are saved but won't be sent until notifications and reminders are on.",
+      "weekdays": {
+        "1": "Mon",
+        "2": "Tue",
+        "3": "Wed",
+        "4": "Thu",
+        "5": "Fri",
+        "6": "Sat",
+        "7": "Sun"
+      },
+      "remove": "Remove",
+      "timeN": "Time {{n}}"
+    }
+  },
+  "achievements": {
+    "title": "Achievements",
+    "open": "Achievements",
+    "newBadge": "New badge",
+    "earnedOn": "Earned {{date}}",
+    "notYet": "Not earned yet",
+    "summary": "{{earned}} of {{total}} earned",
+    "graceNote": "Streaks allow one rest day each week.",
+    "categories": {
+      "gettingStarted": "Getting started",
+      "consistency": "Consistency",
+      "wellness": "Wellness",
+      "learning": "Learning"
+    },
+    "items": {
+      "welcome": {
+        "name": "Welcome aboard",
+        "description": "Set up the app your way."
+      },
+      "first_entry": {
+        "name": "First step",
+        "description": "Logged something for the first time."
+      },
+      "first_reminder": {
+        "name": "Right on time",
+        "description": "Set up your first reminder."
+      },
+      "explorer": {
+        "name": "Explorer",
+        "description": "Used three different trackers."
+      },
+      "streak_7": {
+        "name": "A good week",
+        "description": "Logged something on 7 days, with a rest day allowed."
+      },
+      "streak_30": {
+        "name": "A month of care",
+        "description": "Logged something on 30 days, with a rest day allowed each week."
+      },
+      "hydrated_5": {
+        "name": "Well hydrated",
+        "description": "Reached your own water goal on 5 days."
+      },
+      "mood_14": {
+        "name": "Know your moods",
+        "description": "Checked in with your mood 14 times."
+      },
+      "breath_first": {
+        "name": "Deep breath",
+        "description": "Finished a breathing exercise."
+      },
+      "breath_10": {
+        "name": "Calm habit",
+        "description": "Finished 10 breathing exercises."
+      },
+      "journal_5": {
+        "name": "Reflective",
+        "description": "Wrote 5 journal entries."
+      },
+      "sleep_7": {
+        "name": "Rested week",
+        "description": "Logged your sleep on 7 nights."
+      },
+      "cycle_first": {
+        "name": "Cycle insight",
+        "description": "Logged your first period."
+      },
+      "kicks_first": {
+        "name": "First count",
+        "description": "Finished your first kick count."
+      },
+      "bag_ready": {
+        "name": "Bag packed",
+        "description": "Finished your hospital bag checklist."
+      },
+      "meals_7": {
+        "name": "Mindful plate",
+        "description": "Noted your meals on 7 days."
+      },
+      "privacy_pro": {
+        "name": "Privacy pro",
+        "description": "Read how your data is protected."
+      },
+      "curious": {
+        "name": "Curious mind",
+        "description": "Read your first health article."
+      },
+      "well_read": {
+        "name": "Well read",
+        "description": "Read 10 health articles."
+      }
+    }
+  },
+  "requirements": {
+    "whyTitle": "Why we ask",
+    "add": "Add",
+    "save": "Save",
+    "estimate": "This is an estimate, not medical advice.",
+    "errors": {
+      "invalidDate": "Enter a date as {{pattern}}",
+      "future": "This date can't be in the future",
+      "tooOld": "Use a date within the last year",
+      "dueRange": "Use a date within the next 42 weeks",
+      "range": "Enter a number from {{min}} to {{max}}"
+    },
+    "waterGoal": {
+      "title": "Set your daily water goal",
+      "why": "Your goal lets the Water tracker show your progress and spread reminders through the day.",
+      "label": "Daily goal ({{unit}})",
+      "guidance": "The NHS suggests about 6 to 8 glasses of fluid a day. Needs vary with climate, activity, pregnancy and health, so ask a healthcare professional if you're unsure.",
+      "source": "Source: NHS, “Water, drinks and your health”."
+    },
+    "lastPeriod": {
+      "title": "Add the start of your last period",
+      "why": "Cycle estimates start from this date. It stays private, and you can change it at any time.",
+      "label": "First day of your last period ({{pattern}})"
+    },
+    "dueDate": {
+      "title": "Add your due date",
+      "why": "Your due date sets the week-by-week content and your appointment timeline.",
+      "label": "Estimated due date ({{pattern}})",
+      "guidance": "Your doctor or midwife can confirm your due date, usually from an early scan."
+    }
   }
 }

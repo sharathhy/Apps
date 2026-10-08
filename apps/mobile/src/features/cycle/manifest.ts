@@ -4,5 +4,5 @@ export const cycleModule: ModuleManifest = {
   id: 'cycle',
   icon: 'cycle',
   href: '/cycle',
-  plannedPhase: 3,
+  plannedPhase: 4,
 };

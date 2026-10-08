@@ -20,6 +20,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { watchSession } from '@/features/account/session';
 import { rehydrateAll } from '@/features/data/stores';
+import { startNotificationService } from '@/features/notifications/service';
 import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -49,6 +50,9 @@ export default function RootLayout() {
   useEffect(() => {
     if (profileReady) void i18n.changeLanguage(language ?? detectLanguage());
   }, [language, profileReady]);
+
+  // Re-registers reminders on every start (also after a reinstall or restart).
+  useEffect(() => (profileReady ? startNotificationService() : undefined), [profileReady]);
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
@@ -103,6 +107,20 @@ function ThemedNavigation() {
         <Stack.Screen name="privacy/consents" options={{ headerShown: true, headerTitle: '' }} />
         <Stack.Screen
           name="privacy/delete"
+          options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
+        />
+        <Stack.Screen name="notifications/index" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen
+          name="notifications/settings"
+          options={{ headerShown: true, headerTitle: '' }}
+        />
+        <Stack.Screen
+          name="notifications/reminder"
+          options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
+        />
+        <Stack.Screen name="achievements" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen
+          name="setup/[requirement]"
           options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
         />
         <Stack.Screen

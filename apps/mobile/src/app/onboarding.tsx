@@ -9,7 +9,9 @@ import { QuickToggles } from '@/components/QuickToggles';
 import { SwitchRow } from '@/components/SwitchRow';
 import { consentCategoriesFor } from '@/features/consent/categories';
 import { ConsentList } from '@/features/consent/ConsentList';
+import { trackActivity } from '@/features/achievements/award';
 import { useConsent } from '@/features/consent/store';
+import { requestPermission } from '@/features/notifications/device';
 import { useNotificationPrefs } from '@/features/notifications/prefsStore';
 import { notificationTypes } from '@/features/notifications/types';
 import { useProfile } from '@/features/profile';
@@ -34,6 +36,9 @@ export default function OnboardingScreen() {
 
   const finish = () => {
     completeOnboarding();
+    // The person has now seen what each notification type is, so asking is fair.
+    if (useNotificationPrefs.getState().enabled) void requestPermission();
+    void trackActivity('onboarding_complete');
     router.replace('/');
   };
   const next = () => {

@@ -11,6 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { RequirementPrompt } from '@/features/requirements/components/RequirementPrompt';
 import type { ModuleManifest } from '@/features/types';
 
 import { MedicalDisclaimer } from './MedicalDisclaimer';
@@ -33,6 +34,8 @@ export function ModulePlaceholder({ module }: { module: ModuleManifest }) {
             <Text tone="muted">{t(`modules.${module.id}.description`)}</Text>
           </View>
         </View>
+
+        <RequirementPrompt module={module.id} />
 
         <Card>
           <EmptyState

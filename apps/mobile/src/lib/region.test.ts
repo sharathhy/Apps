@@ -1,4 +1,10 @@
-import { dateFormatPattern, formatDate, regionDefaults } from './region';
+import {
+  dateFormatPattern,
+  formatDate,
+  formatDateKey,
+  parseDateInput,
+  regionDefaults,
+} from './region';
 
 describe('regionDefaults', () => {
   it('uses US conventions for the US', () => {
@@ -45,5 +51,22 @@ describe('formatDate', () => {
   it('describes the pattern', () => {
     expect(dateFormatPattern('DMY')).toBe('DD/MM/YYYY');
     expect(dateFormatPattern('MDY')).toBe('MM/DD/YYYY');
+  });
+});
+
+describe('parseDateInput', () => {
+  it('reads dates in the regional order', () => {
+    expect(parseDateInput('08/10/2026', 'DMY')).toBe('2026-10-08');
+    expect(parseDateInput('10/08/2026', 'MDY')).toBe('2026-10-08');
+    expect(parseDateInput('29.02.2028', 'DMY')).toBe('2028-02-29');
+  });
+  it('rejects impossible dates', () => {
+    expect(parseDateInput('29/02/2027', 'DMY')).toBeNull();
+    expect(parseDateInput('13/13/2026', 'MDY')).toBeNull();
+    expect(parseDateInput('2026-10-08', 'DMY')).toBeNull();
+  });
+  it('formats date keys back', () => {
+    expect(formatDateKey('2026-10-08', 'DMY')).toBe('08/10/2026');
+    expect(formatDateKey('2026-10-08', 'MDY')).toBe('10/08/2026');
   });
 });

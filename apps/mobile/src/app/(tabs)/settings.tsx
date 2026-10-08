@@ -1,9 +1,8 @@
-import { Card, Screen, Text, useTheme, type ThemePreference } from '@wellness/ui';
+import { Screen, Text, useTheme, type ThemePreference } from '@wellness/ui';
 import Constants from 'expo-constants';
 import { getLocales } from 'expo-localization';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
 
 import { AccountSection } from '@/components/AccountSection';
 import { DataControls } from '@/components/DataControls';
@@ -13,6 +12,7 @@ import { audiences, useProfile, type Audience } from '@/features/profile';
 import { TrackerToggles } from '@/features/profile/components/TrackerToggles';
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
 import { SegmentedControl } from '@/components/SegmentedControl';
+import { Section } from '@/components/Section';
 import { supportedLanguages, type Language } from '@/i18n';
 import { dateFormatPattern, regionDefaults } from '@/lib/region';
 
@@ -81,6 +81,19 @@ export default function SettingsScreen() {
         </Text>
       </Section>
 
+      <Section title={t('settings.notifications')}>
+        <ListRow
+          icon="bell"
+          label={t('notifications.settings')}
+          onPress={() => router.push('/notifications/settings')}
+        />
+        <ListRow
+          icon="trophy"
+          label={t('settings.achievements')}
+          onPress={() => router.push('/achievements')}
+        />
+      </Section>
+
       <Section title={t('account.title')}>
         <AccountSection />
       </Section>
@@ -112,16 +125,5 @@ export default function SettingsScreen() {
         {t('settings.version', { version: Constants.expoConfig?.version ?? '0.0.0' })}
       </Text>
     </Screen>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <View className="gap-2">
-      <Text variant="label" tone="muted" accessibilityRole="header">
-        {title}
-      </Text>
-      <Card className="gap-1">{children}</Card>
-    </View>
   );
 }

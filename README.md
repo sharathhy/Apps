@@ -4,7 +4,7 @@ A suite of health and wellness trackers built as one React Native (Expo) app for
 
 On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 
-> **Status: Phase 1 (accounts, consent and data controls).** Onboarding with per-category consent, optional Supabase accounts, the database schema with Row Level Security, export and delete-everything are in place. The module screens are still placeholders.
+> **Status: Phase 2 (notifications and achievements).** Accounts, per-category consent, export and deletion (Phase 1) plus reminders, the notification center, notification settings, achievements and missing-data prompts are in place. The tracker screens themselves are still placeholders; Water and Mood come next.
 
 ## Repository layout
 
@@ -93,6 +93,12 @@ Every table forces Row Level Security, so each account can read and change only 
 - **Export** (Settings → Your data) downloads a JSON file with everything on the device and, when signed in, the account's server data.
 - **Delete** removes the account and its files on the server, cancels scheduled notifications and clears all data on the device.
 - The legal texts in `docs/legal/` are **drafts for legal review**. The app shows them under Settings; after editing one, run `pnpm --filter @wellness/mobile gen:legal` (a test fails if the in-app copy is stale).
+
+## Notifications and achievements
+
+Everything is off until the person opts in. Reminders are local notifications, planned a week ahead and rebuilt on every start, on return to the foreground and after any change, so they survive restarts, reinstalls (restored from the account) and time zone or daylight saving changes. Quiet hours, a daily limit (default 3, at most 5), snooze and lock-screen privacy apply to all of them. On the web, reminders and badges appear in the in-app notification center.
+
+[docs/notifications-and-achievements.md](docs/notifications-and-achievements.md) lists every type, trigger, wording, default and achievement.
 
 ## Design system
 

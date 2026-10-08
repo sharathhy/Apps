@@ -28,7 +28,15 @@ describe('data export', () => {
     useConsent.getState().decide('cycle', true, new Date('2026-10-08T10:00:00Z'));
     const device = collectDeviceData();
 
-    expect(Object.keys(device).sort()).toEqual(['consent', 'notificationPreferences', 'profile']);
+    expect(Object.keys(device).sort()).toEqual([
+      'achievements',
+      'consent',
+      'notificationCenter',
+      'notificationPreferences',
+      'profile',
+      'reminders',
+      'setupDetails',
+    ]);
     expect(device.profile).toMatchObject({ audience: 'women' });
     expect(device.consent).toMatchObject({ records: { cycle: { granted: true } } });
     expect(JSON.stringify(device)).not.toContain('function');

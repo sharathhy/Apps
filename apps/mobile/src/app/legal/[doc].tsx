@@ -1,8 +1,10 @@
 import { Card, Screen, Text } from '@wellness/ui';
 import { Redirect, Stack, useLocalSearchParams } from 'expo-router';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
+import { trackActivity } from '@/features/achievements/award';
 import { legalDocs } from '@/features/legal/content.generated';
 import { LegalDocument } from '@/features/legal/LegalDocument';
 
@@ -23,6 +25,10 @@ export function generateStaticParams(): { doc: DocId }[] {
 export default function LegalScreen() {
   const { doc } = useLocalSearchParams<{ doc: string }>();
   const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (doc === 'privacy') void trackActivity('legal_read');
+  }, [doc]);
 
   if (!doc || !(doc in titleKeys)) return <Redirect href="/settings" />;
   const id = doc as DocId;

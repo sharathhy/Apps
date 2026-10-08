@@ -4,5 +4,5 @@ export const nutritionModule: ModuleManifest = {
   id: 'nutrition',
   icon: 'nutrition',
   href: '/nutrition',
-  plannedPhase: 4,
+  plannedPhase: 5,
 };

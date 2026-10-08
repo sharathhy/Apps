@@ -17,6 +17,9 @@ import { useWindowDimensions, View } from 'react-native';
 
 import { InstallCard } from '@/components/InstallCard';
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
+import { NotificationBell } from '@/components/NotificationBell';
+import { visibleAchievements } from '@/features/achievements/catalog';
+import { useAchievements } from '@/features/achievements/store';
 import { QuickToggles } from '@/components/QuickToggles';
 import { availableTrackers, useProfile, useVisibleModules } from '@/features/profile';
 import { getEnabledModules } from '@/features/registry';
@@ -44,7 +47,10 @@ export default function HomeScreen() {
               {t('app.tagline')}
             </Text>
           </View>
-          <QuickToggles />
+          <View className="items-end gap-2">
+            <QuickToggles />
+            <NotificationBell />
+          </View>
         </View>
       </Appear>
 
@@ -75,6 +81,10 @@ export default function HomeScreen() {
           </View>
           <Icon name="sparkles" size={22} color={colors.primary} />
         </Card>
+      </Appear>
+
+      <Appear index={2}>
+        <AchievementsCard />
       </Appear>
 
       <Text variant="title3" className="mt-2">
@@ -135,5 +145,34 @@ function ModuleCard({ module }: { module: ModuleManifest }) {
         </Card>
       </Pressable>
     </AccentScope>
+  );
+}
+
+function AchievementsCard() {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  const modules = useVisibleModules().map((m) => m.id);
+  const earned = useAchievements((s) => s.earned);
+  const list = visibleAchievements(modules);
+  const count = list.filter((a) => earned.some((e) => e.id === a.id)).length;
+  return (
+    <Pressable
+      accessibilityRole="link"
+      accessibilityLabel={`${t('achievements.title')}: ${t('achievements.summary', { earned: count, total: list.length })}`}
+      onPress={() => router.push('/achievements')}
+    >
+      <Card className="flex-row items-center gap-3">
+        <View className="rounded-lg bg-primary-soft p-2">
+          <Icon name="trophy" color={colors.primary} />
+        </View>
+        <View className="flex-1">
+          <Text variant="label">{t('achievements.title')}</Text>
+          <Text variant="footnote" tone="muted">
+            {t('achievements.summary', { earned: count, total: list.length })}
+          </Text>
+        </View>
+        <Icon name="chevronRight" size={18} />
+      </Card>
+    </Pressable>
   );
 }

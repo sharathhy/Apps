@@ -35,6 +35,18 @@ export const icons = {
   cloudOff: { ios: 'icloud.slash', android: 'cloud_off', web: 'cloud_off' },
   error: { ios: 'exclamationmark.triangle', android: 'warning', web: 'warning' },
   sparkles: { ios: 'sparkles', android: 'auto_awesome', web: 'auto_awesome' },
+  bell: { ios: 'bell', android: 'notifications', web: 'notifications' },
+  compass: { ios: 'safari', android: 'explore', web: 'explore' },
+  flame: { ios: 'flame', android: 'local_fire_department', web: 'local_fire_department' },
+  calendar: { ios: 'calendar.badge.checkmark', android: 'event_available', web: 'event_available' },
+  wind: { ios: 'wind', android: 'air', web: 'air' },
+  book: { ios: 'book', android: 'menu_book', web: 'menu_book' },
+  checklist: { ios: 'checklist', android: 'checklist', web: 'checklist' },
+  trophy: { ios: 'trophy', android: 'emoji_events', web: 'emoji_events' },
+  lock: { ios: 'lock', android: 'lock', web: 'lock' },
+  clock: { ios: 'clock', android: 'schedule', web: 'schedule' },
+  plus: { ios: 'plus', android: 'add', web: 'add' },
+  trash: { ios: 'trash', android: 'delete', web: 'delete' },
 } as const satisfies Record<string, SymbolName>;
 
 export type IconName = keyof typeof icons;
