@@ -54,11 +54,17 @@ export function exportFileName(now = new Date()): string {
 
 /** Saves the export: a download on web, the share sheet on Android and iOS. */
 export async function saveExport(data: DataExport): Promise<void> {
-  const json = JSON.stringify(data, null, 2);
-  const name = exportFileName(new Date(data.exportedAt));
+  await saveTextFile(
+    exportFileName(new Date(data.exportedAt)),
+    JSON.stringify(data, null, 2),
+    'application/json',
+  );
+}
 
+/** Saves a text file: a download on web, the share sheet on Android and iOS. */
+export async function saveTextFile(name: string, text: string, mimeType: string): Promise<void> {
   if (Platform.OS === 'web') {
-    const blob = new Blob([json], { type: 'application/json' });
+    const blob = new Blob([text], { type: mimeType });
     const href = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = href;
@@ -71,6 +77,6 @@ export async function saveExport(data: DataExport): Promise<void> {
   const file = new File(Paths.cache, name);
   if (file.exists) file.delete();
   file.create();
-  file.write(json);
-  await Sharing.shareAsync(file.uri, { mimeType: 'application/json', dialogTitle: name });
+  file.write(text);
+  await Sharing.shareAsync(file.uri, { mimeType, dialogTitle: name });
 }

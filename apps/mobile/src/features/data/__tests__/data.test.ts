@@ -32,6 +32,7 @@ describe('data export', () => {
       'achievements',
       'appLock',
       'consent',
+      'cycle',
       'mood',
       'notificationCenter',
       'notificationPreferences',

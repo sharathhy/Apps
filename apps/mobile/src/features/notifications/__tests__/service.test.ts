@@ -1,6 +1,7 @@
 import { useAchievements } from '@/features/achievements/store';
 import { trackActivity } from '@/features/achievements/award';
 import { useConsent } from '@/features/consent/store';
+import { useCycle } from '@/features/cycle/store';
 import { useProfile } from '@/features/profile/store';
 import { useRequirements } from '@/features/requirements/store';
 import { fakeState } from '@/test/fakeNotifications';
@@ -9,7 +10,7 @@ import { reminderToRow, restoreNotificationData } from '../accountSync';
 import { useInbox } from '../inboxStore';
 import { useNotificationPrefs } from '../prefsStore';
 import { useReminders } from '../remindersStore';
-import { snoozeReminder, syncSchedule } from '../service';
+import { PERIOD_SOON_ID, snoozeReminder, syncSchedule } from '../service';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('expo-notifications', () => require('@/test/fakeNotifications').fake);
@@ -49,6 +50,7 @@ function setUp() {
     useInbox,
     useAchievements,
     useRequirements,
+    useCycle,
   ]) {
     (store.getState() as { reset: () => void }).reset();
   }
@@ -162,6 +164,29 @@ describe('notification service', () => {
     useRequirements.getState().setValue('waterGoalMl', 2000);
     await syncSchedule(now);
     expect(fakeState.scheduled.size).toBe(0);
+  });
+});
+
+describe('period reminder', () => {
+  it('fires once at 09:00 two days before the estimated start, only when turned on', async () => {
+    useConsent.getState().decide('cycle', true);
+    useRequirements.getState().setValue('lastPeriodStart', '2026-09-20');
+    let plan = await syncSchedule(now);
+    expect(plan.planned.some((p) => p.reminderId === PERIOD_SOON_ID)).toBe(false);
+
+    useCycle.getState().setPeriodReminder(true);
+    plan = await syncSchedule(now);
+    const soon = plan.planned.filter((p) => p.reminderId === PERIOD_SOON_ID);
+    // Next start estimated 18 Oct; reminder 16 Oct at 09:00 India time.
+    expect(soon.map((p) => p.fireAt.toISOString())).toEqual(['2026-10-16T03:30:00.000Z']);
+  });
+
+  it('is never planned for someone without the cycle tracker', async () => {
+    useProfile.getState().chooseAudience('men');
+    useRequirements.getState().setValue('lastPeriodStart', '2026-09-20');
+    useCycle.getState().setPeriodReminder(true);
+    const plan = await syncSchedule(now);
+    expect(plan.planned.some((p) => p.reminderId === PERIOD_SOON_ID)).toBe(false);
   });
 });
 

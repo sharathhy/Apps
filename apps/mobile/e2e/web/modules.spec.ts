@@ -60,3 +60,37 @@ test.describe('in the USA', () => {
     await expect(page.getByText('8 fl oz').first()).toBeVisible();
   });
 });
+
+test('cycle: add the last period, see estimates, log a day and export', async ({ page }) => {
+  await onboard(page);
+  await page.goto('/cycle');
+  await page.getByRole('button', { name: 'Add', exact: true }).first().click();
+  await expect(page).toHaveURL(/setup\/lastPeriod/);
+  const start = new Date(Date.now() - 9 * 86_400_000);
+  const dd = String(start.getDate()).padStart(2, '0');
+  const mm = String(start.getMonth() + 1).padStart(2, '0');
+  await page.getByRole('textbox').fill(`${dd}/${mm}/${start.getFullYear()}`);
+  await page.getByRole('button', { name: 'Save' }).click();
+  await expect(page).toHaveURL(/\/cycle\/?$/);
+  await expect(page.getByText('Day 10 of your cycle')).toBeVisible();
+  await expect(page.getByText(/Not a form of contraception/)).toBeVisible();
+  await expect(page.getByText(/does not provide medical advice/)).toBeVisible();
+
+  await page.getByRole('radio', { name: 'Light' }).click();
+  await page.getByRole('checkbox', { name: 'Headache' }).click();
+  await page.getByRole('button', { name: 'Save day' }).click();
+  await expect(page.getByText('Day saved.')).toBeVisible();
+
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download as CSV' }).click();
+  expect((await download).suggestedFilename()).toMatch(/^cycle-.*\.csv$/);
+  const cycle = (await stored(page, 'cycle-v1')).state;
+  expect(Object.values(cycle.logs)).toHaveLength(1);
+});
+
+test('cycle is never offered to men', async ({ page }) => {
+  await onboard(page, "Men's health");
+  await expect(page.getByRole('tab', { name: 'Cycle' })).toHaveCount(0);
+  await page.goto('/cycle');
+  await expect(page.getByText('Day 1 of your cycle')).toHaveCount(0);
+});

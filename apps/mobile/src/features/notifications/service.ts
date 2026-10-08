@@ -4,6 +4,8 @@ import { AppState, Platform } from 'react-native';
 
 import { useAchievements } from '@/features/achievements/store';
 import { useConsent } from '@/features/consent/store';
+import { cycleStats, periodStarts, predictCycle } from '@/features/cycle/model';
+import { useCycle } from '@/features/cycle/store';
 import { activeModules } from '@/features/profile/activeModules';
 import { useProfile } from '@/features/profile/store';
 import { missingRequirements, nextRequirementNotice } from '@/features/requirements/definitions';
@@ -13,7 +15,8 @@ import { useWater } from '@/features/water/store';
 import i18n from '@/i18n';
 import { supabase } from '@/lib/supabase';
 import { deviceTimeZone } from '@/lib/time/device';
-import { localDateKey } from '@/lib/time/zoned';
+import { addDaysKey } from '@/lib/time/days';
+import { fromLocal, localDateKey, parseDateKey } from '@/lib/time/zoned';
 
 import { pushNotificationData, restoreNotificationData } from './accountSync';
 import { notificationContent } from './content';
@@ -28,7 +31,7 @@ import {
   type NotificationData,
 } from './device';
 import { useInbox } from './inboxStore';
-import { planNotifications, type Plan } from './planner';
+import { planNotifications, type Plan, type PlanInput } from './planner';
 import { useNotificationPrefs } from './prefsStore';
 import type { Reminder, ReminderKind } from './reminders';
 import { useReminders } from './remindersStore';
@@ -65,6 +68,34 @@ function waterSmart(now: Date, timeZone: string) {
   return { reminders: [reminder], hold: holdMs > now.getTime() ? new Date(holdMs) : undefined };
 }
 
+type OneOff = NonNullable<PlanInput['oneOffs']>[number];
+
+export const PERIOD_SOON_ID = 'cycle-period-soon';
+/** The period reminder goes out this many days before the earliest estimated start, at 09:00. */
+const PERIOD_SOON_DAYS = 2;
+
+/** One-off reminder before the estimated next period, when turned on. */
+function periodSoon(now: Date, timeZone: string, modules: readonly string[]): OneOff[] {
+  const cycle = useCycle.getState();
+  if (!cycle.periodReminder || !modules.includes('cycle')) return [];
+  const today = localDateKey(now, timeZone);
+  const starts = periodStarts(cycle.periods, useRequirements.getState().lastPeriodStart);
+  const prediction = predictCycle(starts, cycleStats(starts, cycle.periods), today);
+  if (!prediction) return [];
+  const day = parseDateKey(addDaysKey(prediction.nextRange.from, -PERIOD_SOON_DAYS))!;
+  const fireAt = fromLocal({ ...day, hour: 9, minute: 0 }, timeZone);
+  if (fireAt <= now) return [];
+  return [
+    {
+      reminderId: PERIOD_SOON_ID,
+      module: 'cycle',
+      kind: 'scheduled',
+      templateKey: 'cycle.periodSoon',
+      fireAt,
+    },
+  ];
+}
+
 /**
  * Re-plans every local notification and hands the result to the OS. Safe to
  * call often: unchanged notifications are left alone. Runs on start, on
@@ -95,17 +126,20 @@ export async function syncSchedule(now = new Date()): Promise<Plan> {
     timeZone,
     visibleModules: modules,
     shownPerDay: useInbox.getState().shownPerDay,
-    oneOffs: notice
-      ? [
-          {
-            reminderId: REQUIREMENT_REMINDER_ID,
-            module: notice.requirement.module,
-            kind: 'requirement',
-            templateKey: `requirement.${notice.requirement.id}`,
-            fireAt: notice.fireAt,
-          },
-        ]
-      : [],
+    oneOffs: [
+      ...(notice
+        ? [
+            {
+              reminderId: REQUIREMENT_REMINDER_ID,
+              module: notice.requirement.module,
+              kind: 'requirement' as const,
+              templateKey: `requirement.${notice.requirement.id}`,
+              fireAt: notice.fireAt,
+            },
+          ]
+        : []),
+      ...periodSoon(now, timeZone, modules),
+    ],
   });
 
   const planned = plan.planned.find((p) => p.reminderId === REQUIREMENT_REMINDER_ID);
@@ -254,7 +288,7 @@ export function startNotificationService(): () => void {
   for (const store of [useReminders, useNotificationPrefs, useAchievements]) {
     cleanups.push(store.subscribe(onDataChange));
   }
-  for (const store of [useProfile, useConsent, useRequirements, useWater]) {
+  for (const store of [useProfile, useConsent, useRequirements, useWater, useCycle]) {
     cleanups.push(store.subscribe(scheduleSync));
   }
 

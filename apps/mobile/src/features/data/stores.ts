@@ -1,5 +1,6 @@
 import { useAchievements } from '@/features/achievements/store';
 import { useConsent } from '@/features/consent/store';
+import { useCycle } from '@/features/cycle/store';
 import { useInbox } from '@/features/notifications/inboxStore';
 import { useNotificationPrefs } from '@/features/notifications/prefsStore';
 import { useReminders } from '@/features/notifications/remindersStore';
@@ -26,6 +27,7 @@ export const persistedStores = {
   water: useWater,
   mood: useMood,
   sleep: useSleep,
+  cycle: useCycle,
   appLock: useAppLock,
 } as const;
 

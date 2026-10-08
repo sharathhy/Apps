@@ -285,7 +285,8 @@
         "windDown": "Time to start winding down"
       },
       "cycle": {
-        "log": "Time for your check-in"
+        "log": "Time for your check-in",
+        "periodSoon": "A quick note: your cycle estimate has an update"
       },
       "pregnancy": {
         "log": "Time for your check-in"
@@ -713,5 +714,89 @@
     "unlock": "Unlock",
     "tryAgain": "That didn't work. Try again.",
     "unavailable": "Set up a screen lock on this device first."
+  },
+  "cycle": {
+    "subtitle": "Periods, symptoms and estimates",
+    "notContraception": "Estimates only. Not a form of contraception.",
+    "today": {
+      "day": "Day {{day}} of your cycle",
+      "next_one": "Next period estimated around {{date}}, in {{count}} day.",
+      "next_other": "Next period estimated around {{date}}, in {{count}} days.",
+      "nextRange": "Next period estimated between {{from}} and {{to}}.",
+      "late_one": "Your period is {{count}} day past the estimate. Cycles often vary; if you're worried, talk to a doctor.",
+      "late_other": "Your period is {{count}} days past the estimate. Cycles often vary; if you're worried, talk to a doctor.",
+      "fertile": "Estimated fertile window: {{from}} to {{to}}.",
+      "basedOnDefault": "Based on a typical 28-day cycle until you log more periods.",
+      "basedOn_one": "Based on your last cycle.",
+      "basedOn_other": "Based on your last {{count}} cycles.",
+      "empty": "Log the first day of a period to see your estimates.",
+      "startedToday": "My period started today",
+      "started": "Period start saved for {{date}}.",
+      "ended": "My period ended today",
+      "endedSaved": "Period end saved.",
+      "earlierLabel": "Add an earlier period start ({{pattern}})",
+      "earlierSave": "Add start date"
+    },
+    "calendar": {
+      "previous": "Previous month",
+      "next": "Next month",
+      "today": "today",
+      "logged": "has a log",
+      "kinds": {
+        "period": "Period",
+        "predictedPeriod": "Estimated period",
+        "fertile": "Estimated fertile days",
+        "ovulation": "Estimated ovulation"
+      },
+      "estimateNote": "Estimated days are shown only for the next cycle. They are estimates, not medical advice."
+    },
+    "log": {
+      "titleToday": "Today's log",
+      "titleDay": "Log for {{date}}",
+      "flow": "Flow",
+      "symptoms": "Symptoms",
+      "note": "Note (optional)",
+      "save": "Save day",
+      "saved": "Day saved."
+    },
+    "flow": {
+      "spotting": "Spotting",
+      "light": "Light",
+      "medium": "Medium",
+      "heavy": "Heavy"
+    },
+    "symptoms": {
+      "cramps": "Cramps",
+      "headache": "Headache",
+      "bloating": "Bloating",
+      "tenderBreasts": "Tender breasts",
+      "backPain": "Back pain",
+      "acne": "Acne",
+      "tired": "Tired",
+      "cravings": "Cravings",
+      "nausea": "Nausea",
+      "moodSwings": "Mood swings",
+      "discharge": "Discharge"
+    },
+    "history": {
+      "title": "Your cycles",
+      "average_one": "Average cycle {{cycle}} days and period {{period}} days, from your last cycle.",
+      "average_other": "Average cycle {{cycle}} days and period {{period}} days, from your last {{count}} cycles.",
+      "needMore": "Averages appear once you've logged two period starts.",
+      "irregular": "Your cycles have ranged from {{shortest}} to {{longest}} days, so estimates are shown as a range.",
+      "outsideRange": "Your cycles are often outside the 21 to 40 days the NHS calls common. That can be normal for you, but it's worth mentioning to a doctor.",
+      "current": "Current cycle",
+      "length_one": "{{count}} day cycle",
+      "length_other": "{{count}} day cycle",
+      "periodDays_one": "{{count}} day period",
+      "periodDays_other": "{{count}} day period",
+      "delete": "Delete the period that started {{date}}",
+      "export": "Download as CSV",
+      "sources": "Estimates follow the NHS (periods, fertility awareness), ACOG and FIGO guidance."
+    },
+    "reminder": {
+      "title": "Remind me before my period",
+      "description": "Two days before the estimated start. The notification won't mention your period."
+    }
   }
 }
