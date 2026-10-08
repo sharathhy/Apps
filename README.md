@@ -96,3 +96,13 @@ Public repositories get unlimited Actions minutes. Private repositories get 2,00
 ## Medical disclaimer
 
 This app does not provide medical advice, diagnosis, or treatment. Consult a qualified healthcare professional.
+
+## Deploying the web build (Vercel, free Hobby plan)
+
+`vercel.json` holds the whole configuration, so no settings need to be changed in the Vercel dashboard.
+
+1. Sign in at [vercel.com](https://vercel.com) with GitHub.
+2. Choose **Add New → Project**, import `sharathhy/Apps`, and leave every setting at its default.
+3. Click **Deploy**. Every push gets a preview URL; pushes to the production branch update the live site.
+
+Hobby plan limits: 100 GB bandwidth and 6,000 build minutes per month, for non-commercial use. A commercial launch needs the Pro plan or Netlify's free tier, so ask before switching.
