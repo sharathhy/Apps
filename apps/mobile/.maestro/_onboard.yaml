@@ -1,0 +1,10 @@
+# Shared: finish onboarding as "Women's health", allowing every listed category.
+appId: com.example.wellness
+---
+- tapOn: "Women's health"
+- tapOn: 'Next'
+- tapOn: 'Next'
+- tapOn: 'Allow all listed'
+- tapOn: 'Next'
+- tapOn: 'Finish'
+- assertVisible: 'Your trackers'

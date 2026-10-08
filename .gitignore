@@ -23,3 +23,5 @@ apps/mobile/android/
 !debug.keystore
 npm-debug.*
 yarn-error.*
+test-results/
+playwright-report/

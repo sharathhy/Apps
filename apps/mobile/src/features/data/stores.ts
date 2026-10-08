@@ -4,7 +4,9 @@ import { useInbox } from '@/features/notifications/inboxStore';
 import { useNotificationPrefs } from '@/features/notifications/prefsStore';
 import { useReminders } from '@/features/notifications/remindersStore';
 import { useProfile } from '@/features/profile/store';
+import { useMood } from '@/features/mood/store';
 import { useRequirements } from '@/features/requirements/store';
+import { useSleep } from '@/features/sleep/store';
 import { useWater } from '@/features/water/store';
 
 /**
@@ -21,6 +23,8 @@ export const persistedStores = {
   achievements: useAchievements,
   setupDetails: useRequirements,
   water: useWater,
+  mood: useMood,
+  sleep: useSleep,
 } as const;
 
 export type PersistedStoreKey = keyof typeof persistedStores;

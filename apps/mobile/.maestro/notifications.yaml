@@ -1,0 +1,28 @@
+appId: com.example.wellness
+name: Notification setup, reminder add and delete
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Settings'
+- scrollUntilVisible:
+    element: 'Notification settings'
+- tapOn: 'Notification settings'
+- tapOn: 'Allow notifications'
+# Android 13+ and iOS show the system permission prompt here.
+- runFlow:
+    when:
+      visible: 'Allow'
+    commands:
+      - tapOn: 'Allow'
+- tapOn: 'Reminders'
+- scrollUntilVisible:
+    element: 'Add reminder'
+- tapOn: 'Add reminder'
+- tapOn: 'Save'
+- assertVisible: 'Water'
+- tapOn:
+    text: 'Water'
+    index: 1
+- tapOn: 'Delete reminder'
+- assertVisible: 'No reminders yet.'

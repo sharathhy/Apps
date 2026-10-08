@@ -5,4 +5,5 @@ export const sleepModule: ModuleManifest = {
   icon: 'sleep',
   href: '/sleep',
   plannedPhase: 3,
+  ready: true,
 };

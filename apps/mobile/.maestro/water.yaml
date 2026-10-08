@@ -1,0 +1,14 @@
+appId: com.example.wellness
+name: Water goal, quick add and progress
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Water'
+- tapOn: 'Add'
+- tapOn: 'Daily goal (ml)'
+- inputText: '1000'
+- tapOn: 'Save'
+- tapOn: '+ 500 ml'
+- tapOn: '+ 500 ml'
+- assertVisible: 'You reached your goal today'

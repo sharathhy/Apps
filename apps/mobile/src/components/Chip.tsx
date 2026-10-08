@@ -11,7 +11,7 @@ interface ChipProps {
   accessibilityLabel?: string;
 }
 
-/** A compact, wrapping choice or action with a full-size touch target. */
+/** A compact, wrapping choice or action with a full-size touch target. Uses the screen's accent color. */
 export function Chip({ label, onPress, selected = false, role, accessibilityLabel }: ChipProps) {
   return (
     <Pressable
@@ -25,10 +25,10 @@ export function Chip({ label, onPress, selected = false, role, accessibilityLabe
         onPress();
       }}
       className={`min-h-touch min-w-touch items-center justify-center rounded-full px-4 ${
-        selected ? 'bg-primary' : 'border border-border-strong bg-surface'
+        selected ? 'bg-accent' : 'border border-border-strong bg-surface'
       }`}
     >
-      <Text variant="label" tone={selected ? 'onPrimary' : 'default'}>
+      <Text variant="label" tone={selected ? 'onAccent' : 'default'}>
         {label}
       </Text>
     </Pressable>

@@ -1,0 +1,15 @@
+appId: com.example.wellness
+name: Onboarding for men hides Cycle and Pregnancy
+---
+- launchApp:
+    clearState: true
+- tapOn: "Men's health"
+- tapOn: 'Next'
+- assertVisible: 'Your data stays yours'
+- tapOn: 'Next'
+- tapOn: 'Allow all listed'
+- tapOn: 'Next'
+- tapOn: 'Finish'
+- assertVisible: 'Your trackers'
+- assertNotVisible: 'Cycle'
+- assertNotVisible: 'Pregnancy'

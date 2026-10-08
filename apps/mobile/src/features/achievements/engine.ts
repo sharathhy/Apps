@@ -28,6 +28,23 @@ export const emptySummary: ActivitySummary = {
  * forgiven day itself does not count toward the length.
  */
 export function longestStreakWithGrace(dayKeys: string[]): number {
+  return streakRuns(dayKeys).longest;
+}
+
+/**
+ * The streak still running on `today`: it counts if the last logged day is
+ * today or yesterday, or the day before when the grace day is available.
+ */
+export function currentStreakWithGrace(dayKeys: string[], today: string): number {
+  const end = parseDateKey(today);
+  const upToToday = dayKeys.filter((d) => d <= today);
+  const { current, last, graceLeft } = streakRuns(upToToday);
+  if (!end || !last) return 0;
+  const gap = daysBetween(last, end);
+  return gap <= 1 || (gap === 2 && graceLeft > 0) ? current : 0;
+}
+
+function streakRuns(dayKeys: string[]) {
   const days = [...new Set(dayKeys)]
     .map(parseDateKey)
     .filter((d): d is NonNullable<typeof d> => d !== null)
@@ -56,7 +73,7 @@ export function longestStreakWithGrace(dayKeys: string[]): number {
     }
     best = Math.max(best, run);
   }
-  return best;
+  return { longest: best, current: run, last: days[days.length - 1] ?? null, graceLeft };
 }
 
 export function meetsCriterion(criterion: Criterion, summary: ActivitySummary): boolean {

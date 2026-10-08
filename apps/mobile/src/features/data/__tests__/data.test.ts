@@ -31,11 +31,13 @@ describe('data export', () => {
     expect(Object.keys(device).sort()).toEqual([
       'achievements',
       'consent',
+      'mood',
       'notificationCenter',
       'notificationPreferences',
       'profile',
       'reminders',
       'setupDetails',
+      'sleep',
       'water',
     ]);
     expect(device.profile).toMatchObject({ audience: 'women' });

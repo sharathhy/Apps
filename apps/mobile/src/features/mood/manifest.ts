@@ -5,4 +5,5 @@ export const moodModule: ModuleManifest = {
   icon: 'mood',
   href: '/mood',
   plannedPhase: 3,
+  ready: true,
 };

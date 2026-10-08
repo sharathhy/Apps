@@ -42,6 +42,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@testing-library/react-native": "^14.1.0",
     "@types/node": "26.6.4",
     "@types/react": "~19.2.2",
@@ -59,7 +60,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint --max-warnings 0 .",
     "test": "jest",
-    "gen:legal": "node scripts/gen-legal.mjs"
+    "gen:legal": "node scripts/gen-legal.mjs",
+    "e2e:web": "playwright test"
   },
   "private": true
 }

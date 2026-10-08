@@ -1,0 +1,17 @@
+appId: com.example.wellness
+name: Mood check-in, journal and support lines
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Mood'
+- tapOn: 'Okay'
+- tapOn: 'Rest'
+- tapOn: 'Save check-in'
+- assertVisible: 'Check-in saved.'
+- tapOn: 'Very low'
+- tapOn: 'Note (optional)'
+- inputText: 'I want to die'
+- tapOn: 'Save check-in'
+- assertVisible: 'Call 14416'
+- assertVisible: 'Call 988'

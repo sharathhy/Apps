@@ -119,6 +119,13 @@ function ThemedNavigation() {
           options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
         />
         <Stack.Screen name="achievements" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen name="breathe" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen name="journal/index" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen name="journal/[id]" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen
+          name="support"
+          options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
+        />
         <Stack.Screen
           name="setup/[requirement]"
           options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}

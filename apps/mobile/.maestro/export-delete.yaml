@@ -1,0 +1,17 @@
+appId: com.example.wellness
+name: Export and delete all data
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Settings'
+- scrollUntilVisible:
+    element: 'Export my data'
+- tapOn: 'Export my data'
+# The system share sheet opens with the JSON file; close it.
+- back
+- scrollUntilVisible:
+    element: 'Delete all my data'
+- tapOn: 'Delete all my data'
+- tapOn: 'Delete everything'
+- assertVisible: "Women's health"

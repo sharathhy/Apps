@@ -32,13 +32,17 @@ const SHIFTS = [
 /** Create or edit a reminder: tracker, times and days. */
 export function ReminderEditorScreen() {
   const { t, i18n } = useTranslation();
-  const { id } = useLocalSearchParams<{ id?: string }>();
+  const { id, module: requested } = useLocalSearchParams<{ id?: string; module?: ModuleId }>();
   const existing = useReminders((s) => s.reminders.find((r) => r.id === id));
   const { add, update, remove } = useReminders.getState();
   const prefs = useNotificationPrefs();
   const modules = useVisibleModules();
 
-  const [module, setModule] = useState<ModuleId | null>(existing?.module ?? modules[0]?.id ?? null);
+  const [module, setModule] = useState<ModuleId | null>(
+    existing?.module ??
+      (requested && modules.some((m) => m.id === requested) ? requested : modules[0]?.id) ??
+      null,
+  );
   const [times, setTimes] = useState<string[]>(
     existing?.times ?? (module ? defaultReminderTimes[module] : ['09:00']),
   );

@@ -544,5 +544,165 @@
       "until": "Until",
       "needsPermission": "To receive them, turn on notifications and the Smart timing type in notification settings."
     }
+  },
+  "mood": {
+    "subtitle": "Check in, breathe and reflect",
+    "levels": {
+      "1": "Very low",
+      "2": "Low",
+      "3": "Okay",
+      "4": "Good",
+      "5": "Great"
+    },
+    "tags": {
+      "calm": "Calm",
+      "happy": "Happy",
+      "grateful": "Grateful",
+      "tired": "Tired",
+      "anxious": "Anxious",
+      "stressed": "Stressed",
+      "sad": "Sad",
+      "irritable": "Irritable",
+      "family": "Family",
+      "friends": "Friends",
+      "work": "Work",
+      "study": "Study",
+      "outdoors": "Outdoors",
+      "rest": "Rest",
+      "creative": "Creative",
+      "meditation": "Meditation"
+    },
+    "checkIn": {
+      "title": "How are you feeling?",
+      "feelings": "Feelings",
+      "activities": "What you've been doing",
+      "note": "Note (optional)",
+      "notePrivate": "Private to you. Never used for ads.",
+      "save": "Save check-in",
+      "saved": "Check-in saved."
+    },
+    "recent": "Recent check-ins",
+    "deleteEntry": "Delete check-in: {{mood}}",
+    "insights": {
+      "title": "{{month}}",
+      "daysCheckedIn": "days checked in",
+      "streak": "day streak",
+      "calendarSummary": "{{count}} days checked in during {{month}}",
+      "empty": "Your month will fill in as you check in.",
+      "brighterDays": "Often on your brighter days: {{tags}}.",
+      "patternsNote": "These are patterns in what you logged, not causes or a diagnosis."
+    },
+    "breathe": {
+      "title": "Breathe",
+      "short": "A few calm minutes",
+      "ready": "Ready when you are",
+      "done": "Nicely done",
+      "stop": "Stop",
+      "start": "Start",
+      "left": "About {{minutes}} min left",
+      "pattern": "Pattern",
+      "length": "Length",
+      "minutes_one": "{{count}} min",
+      "minutes_other": "{{count}} min",
+      "patterns": {
+        "box": "Box 4-4-4-4",
+        "relax478": "4-7-8",
+        "calm": "Even 5-5"
+      },
+      "patternHints": {
+        "box": "Breathe in, hold, out and hold for 4 seconds each.",
+        "relax478": "In for 4, hold for 7, out slowly for 8.",
+        "calm": "In for 5 and out for 5, with no holds."
+      },
+      "phases": {
+        "inhale": "Breathe in",
+        "holdIn": "Hold",
+        "exhale": "Breathe out",
+        "holdOut": "Hold"
+      },
+      "safety": "Breathe gently. If you feel dizzy or unwell, stop and breathe normally."
+    },
+    "journal": {
+      "title": "Journal",
+      "short": "A prompt to reflect on",
+      "todaysPrompt": "Today's prompt",
+      "write": "Write",
+      "new": "New entry",
+      "edit": "Edit entry",
+      "save": "Save",
+      "saved": "Saved.",
+      "delete": "Delete entry",
+      "emptyTitle": "No entries yet",
+      "emptyMessage": "Your entries stay private to you.",
+      "prompts": {
+        "goodThing": "What is one good thing that happened today?",
+        "grateful": "Who or what are you grateful for right now?",
+        "onYourMind": "What is on your mind?",
+        "kindness": "What kind thing could you do for yourself today?",
+        "energy": "What gave you energy today, and what took it away?",
+        "tomorrow": "What would make tomorrow a little easier?",
+        "proud": "What is something you handled well recently?",
+        "rest": "How did you rest today?"
+      }
+    }
+  },
+  "support": {
+    "title": "Support is available",
+    "link": "Need to talk to someone?",
+    "message": "If you are struggling or thinking about harming yourself, you don't have to go through it alone. These free, confidential lines are open 24 hours a day.",
+    "call": "Call {{number}}",
+    "text": "Text {{number}}",
+    "emergency": "If you are in immediate danger, call 112 in India or 911 in the USA.",
+    "lines": {
+      "teleManas": {
+        "name": "Tele-MANAS (India)",
+        "detail": "National mental health helpline, 14416 or 1-800-891-4416, in many Indian languages."
+      },
+      "lifeline988": {
+        "name": "988 Suicide & Crisis Lifeline (USA)",
+        "detail": "Call or text 988, or chat at 988lifeline.org."
+      }
+    }
+  },
+  "sleep": {
+    "subtitle": "Notice how you rest",
+    "duration": "{{hours}} h {{minutes}} min",
+    "invalid": "Check the times: a night can be up to 24 hours.",
+    "saved": "Night saved.",
+    "earlier": "{{minutes}} minutes earlier",
+    "later": "{{minutes}} minutes later",
+    "log": {
+      "title": "Log a night",
+      "lastNight": "Last night",
+      "morningOf": "Night before {{date}}",
+      "earlierNight": "Earlier night",
+      "laterNight": "Later night",
+      "bed": "Went to bed",
+      "wake": "Woke up",
+      "total": "About {{duration}} in bed",
+      "quality": "How rested do you feel?",
+      "note": "Note (optional)",
+      "save": "Save night"
+    },
+    "quality": {
+      "1": "Not rested",
+      "2": "A little",
+      "3": "Okay",
+      "4": "Rested",
+      "5": "Very rested"
+    },
+    "week": {
+      "title": "Last 7 nights",
+      "empty": "Nights you log will appear here.",
+      "spread": "Your bedtimes varied by about {{minutes}} minutes.",
+      "summary_one": "{{count}} night logged, about {{average}} on average",
+      "summary_other": "{{count}} nights logged, about {{average}} on average"
+    },
+    "deleteNight": "Delete night of {{duration}}",
+    "windDown": {
+      "title": "Wind-down reminder",
+      "message": "A gentle note before bed, at a time you choose.",
+      "set": "Set a reminder"
+    }
   }
 }

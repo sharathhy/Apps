@@ -79,3 +79,16 @@ describe('achievements', () => {
     expect(recordActivity(emptySummary, 'article_read', '2026-10-01').logDays).toEqual([]);
   });
 });
+
+describe('currentStreakWithGrace', () => {
+  const { currentStreakWithGrace } = jest.requireActual('../engine') as typeof import('../engine');
+  it('counts a streak that ends today or yesterday', () => {
+    expect(currentStreakWithGrace(days('2026-10-01', 5), '2026-10-05')).toBe(5);
+    expect(currentStreakWithGrace(days('2026-10-01', 5), '2026-10-06')).toBe(5);
+  });
+  it('keeps it through one missed day with grace, not two', () => {
+    expect(currentStreakWithGrace(days('2026-10-01', 5), '2026-10-07')).toBe(5);
+    expect(currentStreakWithGrace(days('2026-10-01', 5), '2026-10-08')).toBe(0);
+    expect(currentStreakWithGrace([], '2026-10-08')).toBe(0);
+  });
+});

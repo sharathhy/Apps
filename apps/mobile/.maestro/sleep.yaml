@@ -1,0 +1,10 @@
+appId: com.example.wellness
+name: Sleep log
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Sleep'
+- tapOn: 'Rested'
+- tapOn: 'Save night'
+- assertVisible: 'Night saved.'
