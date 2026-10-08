@@ -1,0 +1,24 @@
+{
+  "name": "@wellness/config",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "tsconfig.base.json",
+    "eslint.js",
+    "babel.node.js"
+  ],
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint": "./eslint.js",
+    "./babel.node.js": "./babel.node.js"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-typescript": "^7.27.0",
+    "eslint": "^9.36.0",
+    "eslint-config-expo": "~57.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0"
+  }
+}

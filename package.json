@@ -1,0 +1,26 @@
+{
+  "name": "wellness-suite",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @wellness/mobile start",
+    "web": "pnpm --filter @wellness/mobile web",
+    "android": "pnpm --filter @wellness/mobile android",
+    "ios": "pnpm --filter @wellness/mobile ios",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "build:web": "pnpm --filter @wellness/mobile build:web",
+    "check:native": "pnpm --filter @wellness/mobile check:native",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "turbo": "^2.11.7",
+    "typescript": "~6.0.3"
+  }
+}

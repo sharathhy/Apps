@@ -1,0 +1,88 @@
+{
+  "app": {
+    "name": "Wellness",
+    "tagline": "Calm, private tracking for everyday health"
+  },
+  "nav": {
+    "home": "Home",
+    "settings": "Settings",
+    "primary": "Main navigation"
+  },
+  "modules": {
+    "water": {
+      "title": "Water",
+      "description": "Daily goal, quick add and reminders"
+    },
+    "mood": {
+      "title": "Mood",
+      "description": "Check-ins, breathing and journaling"
+    },
+    "cycle": {
+      "title": "Cycle",
+      "description": "Periods, symptoms and predictions"
+    },
+    "pregnancy": {
+      "title": "Pregnancy",
+      "description": "Week by week, kicks and checkups"
+    },
+    "nutrition": {
+      "title": "Nutrition",
+      "description": "Meals, macros and Indian and US foods"
+    }
+  },
+  "home": {
+    "greeting": "Welcome",
+    "subtitle": "Your trackers",
+    "open": "Open {{module}}",
+    "comingSoon": "Coming in phase {{phase}}"
+  },
+  "module": {
+    "placeholderTitle": "{{module}} is being built",
+    "placeholderMessage": "This tracker arrives in phase {{phase}}. Your data will stay private on your device and in your account.",
+    "loadingPreview": "Loading preview"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "theme": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "hi": "हिन्दी"
+    },
+    "region": "Region",
+    "regionValue": "{{region}} · {{units}} · {{dateFormat}}",
+    "units": {
+      "metric": "Metric",
+      "imperial": "Imperial"
+    },
+    "legal": "Privacy and legal",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
+    "disclaimer": "Medical disclaimer",
+    "version": "Version {{version}}"
+  },
+  "legal": {
+    "draftNotice": "Draft for legal review. The final text will be added in phase 1.",
+    "privacyIntro": "Your health data is private by default. It is never sold or used for advertising, and you can export or delete it at any time from inside the app.",
+    "termsIntro": "These terms will describe how you may use the app and what we are responsible for."
+  },
+  "disclaimer": {
+    "text": "This app does not provide medical advice, diagnosis, or treatment. Consult a qualified healthcare professional."
+  },
+  "states": {
+    "offlineTitle": "You are offline",
+    "offlineMessage": "You can keep logging. We will sync when you are back online.",
+    "errorTitle": "Something went wrong",
+    "errorMessage": "Please try again.",
+    "retry": "Try again"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "back": "Go to home"
+  }
+}

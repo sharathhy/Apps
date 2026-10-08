@@ -1,0 +1,4 @@
+{
+  "extends": "@wellness/config/tsconfig.base.json",
+  "include": ["src"]
+}
