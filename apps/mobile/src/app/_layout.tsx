@@ -17,7 +17,9 @@ import {
 } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { watchSession } from '@/features/account/session';
+import { rehydrateAll } from '@/features/data/stores';
 import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -31,7 +33,7 @@ export default function RootLayout() {
     Inter_600SemiBold,
     Inter_700Bold,
   });
-  const profileReady = useProfile((s) => s.hydrated);
+  const [profileReady, setProfileReady] = useState(false);
   const ready = (fontsLoaded || !!fontError) && profileReady;
   const theme = useProfile((s) => s.theme);
   const setTheme = useProfile((s) => s.setTheme);
@@ -39,7 +41,9 @@ export default function RootLayout() {
   const language = useProfile((s) => s.language);
 
   useEffect(() => {
-    void useProfile.persist.rehydrate();
+    // Every on-device store is loaded before the first screen renders.
+    void rehydrateAll().finally(() => setProfileReady(true));
+    return watchSession();
   }, []);
 
   useEffect(() => {
@@ -85,7 +89,22 @@ function ThemedNavigation() {
         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}
       >
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="welcome" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="onboarding" options={{ gestureEnabled: false }} />
+        <Stack.Screen name="account/sign-in" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen name="account/sign-up" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen
+          name="account/reset-password"
+          options={{ headerShown: true, headerTitle: '' }}
+        />
+        <Stack.Screen
+          name="account/update-password"
+          options={{ headerShown: true, headerTitle: '' }}
+        />
+        <Stack.Screen name="privacy/consents" options={{ headerShown: true, headerTitle: '' }} />
+        <Stack.Screen
+          name="privacy/delete"
+          options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
+        />
         <Stack.Screen
           name="legal/[doc]"
           options={{ headerShown: true, presentation: 'modal', headerTitle: '' }}

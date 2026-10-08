@@ -4,3 +4,4 @@ dist
 .expo
 coverage
 dist-native
+apps/mobile/src/features/legal/content.generated.ts

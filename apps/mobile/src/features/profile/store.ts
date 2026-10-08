@@ -15,11 +15,14 @@ interface ProfileState {
   /** `null` means follow the device language. */
   language: Language | null;
   theme: ThemePreference;
+  /** ISO timestamp; `null` until onboarding is finished or skipped. */
+  onboardingCompletedAt: string | null;
   hydrated: boolean;
   chooseAudience: (audience: Audience) => void;
   toggleTracker: (id: ModuleId) => void;
   setLanguage: (language: Language) => void;
   setTheme: (theme: ThemePreference) => void;
+  completeOnboarding: (now?: Date) => void;
   reset: () => void;
 }
 
@@ -41,22 +44,41 @@ export const useProfile = create<ProfileState>()(
       trackers: [],
       language: null,
       theme: 'system',
+      onboardingCompletedAt: null,
       hydrated: false,
       chooseAudience: (audience) => set({ audience, trackers: defaultTrackers(audience) }),
       toggleTracker: (id) =>
         set((s) => ({ trackers: toggleTracker(s.trackers, id, s.audience ?? 'everyone') })),
       setLanguage: (language) => set({ language }),
       setTheme: (theme) => set({ theme }),
-      reset: () => set({ audience: null, trackers: [], language: null, theme: 'system' }),
+      completeOnboarding: (now = new Date()) =>
+        set((s) =>
+          s.audience
+            ? { onboardingCompletedAt: now.toISOString() }
+            : {
+                audience: 'everyone',
+                trackers: defaultTrackers('everyone'),
+                onboardingCompletedAt: now.toISOString(),
+              },
+        ),
+      reset: () =>
+        set({
+          audience: null,
+          trackers: [],
+          language: null,
+          theme: 'system',
+          onboardingCompletedAt: null,
+        }),
     }),
     {
       name: 'profile-v1',
       storage: createJSONStorage(() => AsyncStorage),
-      partialize: ({ audience, trackers, language, theme }) => ({
+      partialize: ({ audience, trackers, language, theme, onboardingCompletedAt }) => ({
         audience,
         trackers,
         language,
         theme,
+        onboardingCompletedAt,
       }),
       merge: (persisted, current) => {
         const stored = (persisted ?? {}) as Partial<ProfileState>;

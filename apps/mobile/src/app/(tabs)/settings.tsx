@@ -5,6 +5,8 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { AccountSection } from '@/components/AccountSection';
+import { DataControls } from '@/components/DataControls';
 import { InstallCard } from '@/components/InstallCard';
 import { ListRow } from '@/components/ListRow';
 import { audiences, useProfile, type Audience } from '@/features/profile';
@@ -77,6 +79,14 @@ export default function SettingsScreen() {
             dateFormat: dateFormatPattern(region.dateOrder),
           })}
         </Text>
+      </Section>
+
+      <Section title={t('account.title')}>
+        <AccountSection />
+      </Section>
+
+      <Section title={t('dataControls.title')}>
+        <DataControls />
       </Section>
 
       <Section title={t('settings.legal')}>

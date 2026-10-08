@@ -48,8 +48,9 @@ describe.each(schemes)('%s theme meets WCAG AA', (scheme) => {
     expect(contrast(c[name], c[`${name}Soft`])).toBeGreaterThanOrEqual(AA_TEXT);
   });
 
-  it('text on primary buttons is readable', () => {
+  it('text on primary and danger buttons is readable', () => {
     expect(contrast(c.onPrimary, c.primary)).toBeGreaterThanOrEqual(AA_TEXT);
+    expect(contrast(c.onPrimary, c.danger)).toBeGreaterThanOrEqual(AA_TEXT);
     expect(contrast(c.primary, c.primarySoft)).toBeGreaterThanOrEqual(AA_TEXT);
   });
 

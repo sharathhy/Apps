@@ -2,6 +2,7 @@ import type { ModuleId } from '@wellness/design-tokens';
 import { Redirect } from 'expo-router';
 import type { ComponentType } from 'react';
 
+import { ConsentGate } from '@/features/consent/ConsentGate';
 import { useVisibleModules } from '@/features/profile';
 
 /** Renders a module screen, or sends the user home if it is turned off in config or by the user. */
@@ -16,5 +17,9 @@ export function ModuleRoute({
   if (!visible.some((m) => m.id === id)) {
     return <Redirect href="/" />;
   }
-  return <ScreenComponent />;
+  return (
+    <ConsentGate module={id}>
+      <ScreenComponent />
+    </ConsentGate>
+  );
 }

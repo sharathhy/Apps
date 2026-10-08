@@ -4,8 +4,8 @@ import { AppNavigation } from '@/components/AppNavigation';
 import { useProfile } from '@/features/profile';
 
 export default function TabsLayout() {
-  const audience = useProfile((s) => s.audience);
-  // First run: ask who the app is for before showing any trackers.
-  if (!audience) return <Redirect href="/welcome" />;
+  const onboarded = useProfile((s) => !!s.onboardingCompletedAt && !!s.audience);
+  // First run: onboarding (who it is for, privacy, consent, notifications).
+  if (!onboarded) return <Redirect href="/onboarding" />;
   return <AppNavigation />;
 }

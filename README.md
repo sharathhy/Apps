@@ -4,7 +4,7 @@ A suite of health and wellness trackers built as one React Native (Expo) app for
 
 On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 
-> **Status: Phase 0 (project setup).** The design tokens, UI kit, responsive navigation shell, localization (English and Hindi) and CI are in place. The module screens are placeholders.
+> **Status: Phase 1 (accounts, consent and data controls).** Onboarding with per-category consent, optional Supabase accounts, the database schema with Row Level Security, export and delete-everything are in place. The module screens are still placeholders.
 
 ## Repository layout
 
@@ -16,10 +16,18 @@ apps/
     src/config/modules.config.ts   Turn modules on or off and set their order
     src/i18n/             i18next setup and en/hi string files
     src/lib/              Pure helpers (regional date and unit defaults)
+    src/features/consent  Per-category consent (stored on the device, synced to the ledger when signed in)
+    src/features/data     Export and delete-everything
+    src/features/account  Sign-up, sign-in and password reset (Supabase)
 packages/
   design-tokens/          Colors (light/dark), type scale, spacing, radii, shadows, motion; Tailwind preset
   ui/                     Token-only components: Text, Button, Card, Screen, Icon, ProgressRing, Skeleton, state views
   config/                 Shared TypeScript, ESLint and Babel config
+supabase/
+  migrations/             Database schema, Row Level Security and storage bucket
+  functions/delete-account Edge function that deletes the signed-in user's files and account
+  tests/                  RLS tests that run against a real Postgres
+docs/legal/               Privacy policy, terms and medical disclaimer (drafts for legal review)
 .github/workflows/ci.yml  Typecheck, lint, tests, web build and native bundle checks
 ```
 
@@ -38,13 +46,13 @@ pnpm install
 
 ### Environment variables
 
-Phase 0 needs none. From Phase 1 the app will read these from `apps/mobile/.env` (never commit it):
+The app works fully on the device without any. To turn on accounts and sync, copy `apps/mobile/.env.example` to `apps/mobile/.env` (never commit it) and fill in:
 
 | Variable                        | Phase | Purpose                                  |
 | ------------------------------- | ----- | ---------------------------------------- |
 | `EXPO_PUBLIC_SUPABASE_URL`      | 1     | Supabase project URL                     |
 | `EXPO_PUBLIC_SUPABASE_ANON_KEY` | 1     | Supabase public anon key (RLS-protected) |
-| `SENTRY_DSN`                    | 5     | Crash reporting                          |
+| `SENTRY_DSN`                    | 7     | Crash reporting                          |
 
 ## Commands
 
@@ -63,7 +71,28 @@ Run these from the repository root.
 | `pnpm build:web`    | Static web export to `apps/mobile/dist` (deployable as is)        |
 | `pnpm check:native` | Compile the Android and iOS JavaScript bundles (no device needed) |
 
+`pnpm test` also runs the Row Level Security tests when `DATABASE_URL` points at a disposable Postgres 15+ database (CI provides one). Without it those tests are skipped locally.
+
 Store builds use EAS (`apps/mobile/eas.json`). They are set up in Phase 6.
+
+## Supabase (accounts and sync)
+
+Accounts are optional. Without Supabase settings the app stores everything on the device, and Settings shows that accounts are not set up.
+
+1. Create a free project at [supabase.com](https://supabase.com). The free plan includes 500 MB of database storage and 50,000 monthly active users, and pauses projects after a week without activity; check current limits at supabase.com/pricing.
+2. Install the [Supabase CLI](https://supabase.com/docs/guides/cli), then run `supabase link --project-ref <ref>` and `supabase db push` from the repository root to apply `supabase/migrations`.
+3. Deploy the deletion function: `supabase functions deploy delete-account`.
+4. Under Authentication → URL configuration, add `wellness://**` and your web URL (for example `https://<your-app>.vercel.app/**`) to the redirect URLs, so the email confirmation and password reset links open the app.
+5. Put the project URL and anon key in `apps/mobile/.env` and, for the web build, in the Vercel project's environment variables.
+
+Every table forces Row Level Security, so each account can read and change only its own rows. Consent records are append-only, and the notification delivery log has no user column.
+
+## Privacy and legal
+
+- Onboarding explains what is stored and asks for consent separately for each kind of health data and for anonymous statistics. Everything is off until the person turns it on. A module stays locked until its category is allowed, and consent can be changed in Settings → Your data.
+- **Export** (Settings → Your data) downloads a JSON file with everything on the device and, when signed in, the account's server data.
+- **Delete** removes the account and its files on the server, cancels scheduled notifications and clears all data on the device.
+- The legal texts in `docs/legal/` are **drafts for legal review**. The app shows them under Settings; after editing one, run `pnpm --filter @wellness/mobile gen:legal` (a test fails if the in-app copy is stale).
 
 ## Design system
 

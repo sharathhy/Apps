@@ -1,0 +1,27 @@
+/** Server tables that hold a person's data, exported in this order. Keep in sync with supabase/migrations. */
+export const userTables = [
+  'profiles',
+  'consents',
+  'notification_preferences',
+  'reminders',
+  'achievements_earned',
+  'water_logs',
+  'mood_entries',
+  'journal_entries',
+  'breathing_sessions',
+  'sleep_logs',
+  'cycle_periods',
+  'cycle_day_logs',
+  'pregnancies',
+  'pregnancy_appointments',
+  'kick_sessions',
+  'weight_logs',
+  'symptom_logs',
+  'baby_names',
+  'checklist_items',
+  'custom_foods',
+  'meals',
+  'meal_items',
+] as const;
+
+export type UserTable = (typeof userTables)[number];

@@ -18,3 +18,4 @@ export { AccentScope } from './theme/AccentScope';
 export { ThemeProvider, useTheme, type ThemePreference } from './theme/ThemeProvider';
 export { Appear } from './motion/Appear';
 export { useBounce } from './motion/useBounce';
+export { TextField, type TextFieldProps } from './components/TextField';

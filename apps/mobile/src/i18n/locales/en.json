@@ -79,9 +79,7 @@
     "version": "Version {{version}}"
   },
   "legal": {
-    "draftNotice": "Draft for legal review. The final text will be added in phase 1.",
-    "privacyIntro": "Your health data is private by default. It is never sold or used for advertising, and you can export or delete it at any time from inside the app.",
-    "termsIntro": "These terms will describe how you may use the app and what we are responsible for."
+    "englishOnly": "The legal documents are drafts awaiting legal review and are shown in English only for now."
   },
   "disclaimer": {
     "text": "This app does not provide medical advice, diagnosis, or treatment. Consult a qualified healthcare professional."
@@ -137,5 +135,136 @@
     "button": "Install app",
     "ios": "On iPhone or iPad, tap Share, then Add to Home Screen.",
     "installed": "Installed on this device"
+  },
+  "onboarding": {
+    "step": "Step {{current}} of {{total}}",
+    "next": "Next",
+    "back": "Back",
+    "skip": "Skip",
+    "finish": "Finish",
+    "privacy": {
+      "title": "Your data stays yours",
+      "subtitle": "Here is how we handle your health information.",
+      "device": "Everything is stored on this device first. The app works fully without an account.",
+      "account": "An account is optional. It backs up your data, protected so only you can read it.",
+      "noAds": "We never sell your data or use it for advertising. There are no ad trackers in the app.",
+      "control": "You can export or permanently delete all your data at any time from Settings.",
+      "readPolicy": "Read the privacy policy"
+    },
+    "consent": {
+      "title": "Choose what to track",
+      "subtitle": "Each kind of health data needs your permission. Turn on only what you want. You can change this later in Settings.",
+      "allowAll": "Allow all listed"
+    },
+    "notifications": {
+      "title": "Reminders, only if you want them",
+      "subtitle": "Everything is off. Turn on what would help. We only ask your device for permission when you first set a reminder.",
+      "master": "Allow notifications",
+      "lockScreen": "Hidden on the lock screen by default; reminders never mention health details."
+    }
+  },
+  "consent": {
+    "categories": {
+      "water": {
+        "title": "Water intake",
+        "why": "Amounts and times you log, to show your daily progress."
+      },
+      "mood": {
+        "title": "Mood and journal",
+        "why": "Mood check-ins and journal entries, to show your monthly insights."
+      },
+      "sleep": {
+        "title": "Sleep",
+        "why": "Bed and wake times, to show your sleep patterns."
+      },
+      "cycle": {
+        "title": "Period and cycle",
+        "why": "Period dates, flow and symptoms, to estimate your next cycle."
+      },
+      "pregnancy": {
+        "title": "Pregnancy",
+        "why": "Due date, appointments, kicks and weight, to follow your pregnancy week by week."
+      },
+      "nutrition": {
+        "title": "Nutrition",
+        "why": "Meals and foods you log, to show balanced nutrition summaries."
+      },
+      "anonymous_analytics": {
+        "title": "Anonymous usage statistics",
+        "why": "Counts such as which screens are opened. Never includes health details."
+      }
+    },
+    "gateTitle": "Allow {{module}} data?",
+    "gateMessage": "To use this tracker we need your permission to store this information.",
+    "allow": "Allow",
+    "manage": "Manage permissions",
+    "allowed": "Allowed",
+    "notAllowed": "Not allowed"
+  },
+  "notificationTypes": {
+    "scheduled": {
+      "title": "Reminders",
+      "why": "At times you choose, like drinking water or a mood check-in."
+    },
+    "smart": {
+      "title": "Smart timing",
+      "why": "Moves reminders to your active hours and pauses them during quiet hours."
+    },
+    "achievement": {
+      "title": "Achievements",
+      "why": "A note when you reach a milestone. Sent once per achievement."
+    },
+    "requirement": {
+      "title": "Missing information",
+      "why": "At most once a week, if a tracker needs something from you."
+    },
+    "insight": {
+      "title": "Weekly summary",
+      "why": "A short summary of your week and gentle trends."
+    }
+  },
+  "account": {
+    "title": "Account",
+    "optional": "Optional. Back up your data and use it on more than one device.",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as {{email}}",
+    "email": "Email",
+    "password": "Password",
+    "newPassword": "New password",
+    "forgot": "Forgot password?",
+    "haveAccount": "Already have an account? Sign in",
+    "noAccount": "New here? Create an account",
+    "resetTitle": "Reset your password",
+    "resetMessage": "We will email you a link to choose a new password.",
+    "sendReset": "Send reset link",
+    "resetSent": "If an account exists for that email, a reset link is on its way.",
+    "updateTitle": "Choose a new password",
+    "updateDone": "Your password has been changed.",
+    "save": "Save",
+    "confirmEmail": "Check your email to confirm your account, then sign in.",
+    "notConfigured": "Accounts are not available in this version.",
+    "errors": {
+      "required": "This is required",
+      "invalid": "Enter a valid email address",
+      "tooShort": "Use at least 8 characters"
+    }
+  },
+  "dataControls": {
+    "title": "Your data",
+    "consents": "Data permissions",
+    "export": "Export my data",
+    "exporting": "Preparing your export",
+    "exported": "Your data has been exported.",
+    "exportFailed": "Export failed. Please try again.",
+    "delete": "Delete all my data",
+    "deleteTitle": "Delete all your data?",
+    "deleteMessage": "This permanently deletes everything on this device, cancels all reminders and, if you are signed in, deletes your account and all data stored in it. This cannot be undone.",
+    "deleteExportFirst": "You may want to export your data first.",
+    "deleteConfirm": "Delete everything",
+    "deleting": "Deleting",
+    "deleteFailed": "We could not delete your account. Nothing was removed. Check your connection and try again.",
+    "cancel": "Cancel"
   }
 }

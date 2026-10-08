@@ -4,13 +4,14 @@ import { useTheme } from '../theme/ThemeProvider';
 import { Pressable, type PressableProps } from './Pressable';
 import { Text } from './Text';
 
-type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'ghost';
+type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'ghost' | 'danger';
 
 const containerClass: Record<ButtonVariant, string> = {
   primary: 'bg-primary',
   accent: 'bg-accent',
   secondary: 'bg-surface border border-border-strong',
   ghost: 'bg-transparent',
+  danger: 'bg-danger',
 };
 
 const labelTone = {
@@ -18,6 +19,7 @@ const labelTone = {
   accent: 'onAccent',
   secondary: 'default',
   ghost: 'primary',
+  danger: 'onPrimary',
 } as const;
 
 export interface ButtonProps extends Omit<PressableProps, 'children'> {
