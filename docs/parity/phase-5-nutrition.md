@@ -2,6 +2,8 @@
 
 Features commonly found in popular food trackers, and whether this app has them. Items marked **Your call** are common elsewhere but not in the spec; they are not built unless you ask.
 
+> **Status (built):** everything marked Planned below is built and tested, except nutrient values for the built-in food list. The list ships with 111 everyday foods (66 Indian, 45 US) (names in English and Hindi, food groups, household measures) so logging and the balanced plate work now. Nutrient values appear for your own foods and scanned packets. Values for the built-in list will be loaded from a sourced database once the data source is chosen; none are typed in by hand.
+
 The rule for this module: **no calorie targets, deficits, "calories left" or weight-loss framing anywhere**, including achievements and notifications. Guidance is about balance and variety.
 
 ## Logging

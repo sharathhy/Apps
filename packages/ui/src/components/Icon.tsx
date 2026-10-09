@@ -55,6 +55,9 @@ export const icons = {
   tap: { ios: 'hand.tap', android: 'touch_app', web: 'touch_app' },
   star: { ios: 'star', android: 'star', web: 'star' },
   starFilled: { ios: 'star.fill', android: 'star', web: 'star' },
+  barcode: { ios: 'barcode.viewfinder', android: 'barcode_scanner', web: 'barcode_scanner' },
+  search: { ios: 'magnifyingglass', android: 'search', web: 'search' },
+  chevronLeft: { ios: 'chevron.left', android: 'chevron_left', web: 'chevron_left' },
 } as const satisfies Record<string, SymbolName>;
 
 export type IconName = keyof typeof icons;

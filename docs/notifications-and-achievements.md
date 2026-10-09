@@ -113,6 +113,8 @@ Rules: never reward restriction, extreme goals, eating less or weight change; no
 | Wellness        | First count     | First kick count finished                 | Pregnancy |
 | Wellness        | Bag packed      | Hospital bag checklist finished           | Pregnancy |
 | Wellness        | Mindful plate   | Meals noted on 7 days                     | Nutrition |
+| Wellness        | Colourful plate | Vegetables or fruit on 5 days             | Nutrition |
+| Wellness        | Home cooking    | A home-cooked meal on 5 days              | Nutrition |
 | Learning        | Privacy pro     | Opened the privacy policy                 | —         |
 | Learning        | Curious mind    | First health article read                 | —         |
 | Learning        | Well read       | 10 health articles read                   | —         |

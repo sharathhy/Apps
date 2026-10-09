@@ -471,6 +471,14 @@
       "well_read": {
         "name": "Well read",
         "description": "Read 10 health articles."
+      },
+      "colourful_plate": {
+        "name": "Colourful plate",
+        "description": "Had vegetables or fruit on 5 days."
+      },
+      "home_cooking": {
+        "name": "Home cooking",
+        "description": "Enjoyed a home-cooked meal on 5 days."
       }
     }
   },
@@ -1067,5 +1075,176 @@
     "startFresh": "Start fresh on this device",
     "startFreshConfirm": "This removes the other account's tracker entries from this device only. That account keeps its backed-up copy.",
     "startFreshYes": "Remove them from this device"
+  },
+  "nutrition": {
+    "subtitle": "Meals and a balanced plate. No calorie targets.",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "meals": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snacks"
+    },
+    "add": "Add",
+    "addTo": "Add to {{meal}}",
+    "kcal": "{{value}} kcal",
+    "grams": "{{value}} g",
+    "remove": "Remove",
+    "removeItem": "Remove {{food}}",
+    "homeCooked": "Home-cooked",
+    "removed": "Food removed.",
+    "undo": "Undo",
+    "plate": {
+      "title": "Your plate today",
+      "guide": {
+        "IN": "ICMR-NIN's \"My Plate for the Day\" suggests filling about half your plate with vegetables and fruits, with the rest from cereals and millets, pulses, eggs or meat, and milk or curd, plus a few nuts and seeds.",
+        "US": "MyPlate suggests making half your plate fruits and vegetables, making half your grains whole grains, and varying your protein foods."
+      },
+      "sections": {
+        "vegetables": "Vegetables",
+        "fruits": "Fruits",
+        "grains": "Grains and millets",
+        "pulsesProtein": "Pulses, eggs and meat",
+        "dairy": "Milk and curd",
+        "nutsSeeds": "Nuts and seeds",
+        "protein": "Protein foods"
+      },
+      "hadA11y_one": "{{group}}: at {{count}} meal",
+      "hadA11y_other": "{{group}}: at {{count}} meals",
+      "had_one": "{{group}} at {{count}} meal.",
+      "had_other": "{{group}} at {{count}} meals.",
+      "ideas": "Ideas for variety another time: {{groups}}.",
+      "empty": "Log a meal to see how your day comes together.",
+      "source": {
+        "IN": "Guidance: ICMR-National Institute of Nutrition, Dietary Guidelines for Indians (2024).",
+        "US": "Guidance: USDA MyPlate (myplate.gov)."
+      }
+    },
+    "totals": {
+      "title": "Nutrients today",
+      "none": "Nutrient values appear for foods that have them, such as your own foods and scanned packets. Built-in foods count toward your plate.",
+      "partial_one": "From {{count}} of {{total}} foods; the others have no nutrient values yet.",
+      "partial_other": "From {{count}} of {{total}} foods; the others have no nutrient values yet.",
+      "noTargets": "Shown for information only. There are no targets to hit."
+    },
+    "nutrients": {
+      "protein": "Protein",
+      "carbs": "Carbohydrate",
+      "fat": "Fat",
+      "fiber": "Fibre",
+      "kcal": "Energy"
+    },
+    "showEnergy": {
+      "title": "Show energy (kcal)",
+      "description": "Off by default. When on, energy is shown as plain information, never as a target."
+    },
+    "myFoods": "My foods",
+    "export": "Export meals (CSV)",
+    "units": {
+      "katori_one": "{{count}} katori",
+      "katori_other": "{{count}} katoris",
+      "piece_one": "{{count}} piece",
+      "piece_other": "{{count}} pieces",
+      "glass_one": "{{count}} glass",
+      "glass_other": "{{count}} glasses",
+      "cup_one": "{{count}} cup",
+      "cup_other": "{{count}} cups",
+      "tbsp_one": "{{count}} tbsp",
+      "tbsp_other": "{{count}} tbsp",
+      "plate_one": "{{count}} plate",
+      "plate_other": "{{count}} plates",
+      "bowl_one": "{{count}} bowl",
+      "bowl_other": "{{count}} bowls",
+      "slice_one": "{{count}} slice",
+      "slice_other": "{{count}} slices",
+      "serving_one": "{{count}} serving",
+      "serving_other": "{{count}} servings",
+      "g_one": "{{count}} g",
+      "g_other": "{{count}} g",
+      "ml_one": "{{count}} ml",
+      "ml_other": "{{count}} ml",
+      "oz_one": "{{count}} oz",
+      "oz_other": "{{count}} oz",
+      "can_one": "{{count}} can",
+      "can_other": "{{count}} cans"
+    },
+    "customAmount_one": "{{count}} × {{unit}}",
+    "customAmount_other": "{{count}} × {{unit}}",
+    "search": {
+      "label": "Search foods",
+      "hint": "Try roti, dal, idli, oatmeal or a dish name.",
+      "none": "No match. Add it as your own food."
+    },
+    "groups": {
+      "grains": "Grains and millets",
+      "pulses": "Pulses and beans",
+      "vegetables": "Vegetables",
+      "fruits": "Fruits",
+      "dairy": "Milk, curd and cheese",
+      "protein": "Eggs, meat, fish and tofu",
+      "nutsSeeds": "Nuts and seeds",
+      "fats": "Oils and fats",
+      "sweets": "Sweets",
+      "drinks": "Drinks",
+      "mixed": "Mixed dish",
+      "other": "Other"
+    },
+    "mine": "Your food",
+    "amount": "Amount",
+    "less": "Less",
+    "more": "More",
+    "nutrientLine": "Protein {{protein}} g · Carbohydrate {{carbs}} g · Fat {{fat}} g · Fibre {{fiber}} g",
+    "groupOnly": "Counts toward your balanced plate. Nutrient values for the built-in list are added once a sourced database is loaded.",
+    "back": "Back",
+    "food": {
+      "new": "Add your own food",
+      "edit": "Edit food",
+      "editNamed": "Edit {{name}}",
+      "intro": "Only the name and food group are needed. Everything else is optional.",
+      "fromOff": "Values from {{source}}. Please check them against the packet.",
+      "name": "Name",
+      "group": "Food group",
+      "serving": "One serving is",
+      "servingPlaceholder": "For example, 1 bar or 1 katori",
+      "grams": "Serving weight in grams",
+      "perServing": "Nutrients per serving",
+      "kcalLabel": "Energy (kcal)",
+      "gramsOf": "{{nutrient}} (g)",
+      "barcode": "Barcode {{code}}",
+      "save": "Save food",
+      "delete": "Delete this food",
+      "none": "Foods you add or scan appear here.",
+      "why": {
+        "name": "So you can find it again when you search.",
+        "group": "Used for your balanced plate view.",
+        "serving": "Describes one serving in your own words, so amounts make sense later.",
+        "optional": "Optional. Helps you compare with a packet label.",
+        "nutrients": "Optional. Copy them from the packet label if you want nutrient totals. Leave blank if you don't know."
+      },
+      "errors": {
+        "name": "Please enter a name.",
+        "group": "Please choose a food group.",
+        "number": "Please enter a number, or leave it blank.",
+        "range": "Please enter a number from 0 to {{max}}, or leave it blank."
+      }
+    },
+    "scan": {
+      "title": "Scan a barcode",
+      "intro": "Point the camera at the barcode on a packet. We look up the product so you don't have to type the label.",
+      "privacy": "The camera is only used while you scan, and nothing is recorded. Only the barcode number is sent to Open Food Facts, a free and open food database, to find the product.",
+      "start": "Turn on the camera",
+      "denied": "Camera access is off for this app. You can turn it on in your device settings, or type the barcode number below.",
+      "openSettings": "Open settings",
+      "typeLabel": "Or type the barcode number",
+      "lookUp": "Look up",
+      "badCode": "A barcode is 8 to 14 digits.",
+      "looking": "Looking up the product…",
+      "notFound": "This product isn't in Open Food Facts yet. You can add it yourself.",
+      "failed": "We couldn't reach Open Food Facts. Check your connection, or add the food yourself.",
+      "addYourself": "Add it yourself"
+    }
   }
 }

@@ -11,6 +11,16 @@ import type {
   MoodTag,
 } from '@/features/mood/model';
 import { useMood } from '@/features/mood/store';
+import {
+  foodGroups,
+  type CustomFood,
+  type FoodGroup,
+  type Meal,
+  type MealItem,
+  type MealType,
+  type Nutrients,
+} from '@/features/nutrition/model';
+import { useNutrition } from '@/features/nutrition/store';
 import type { KickSession, PregnancySymptom } from '@/features/pregnancy/model';
 import {
   usePregnancy,
@@ -26,7 +36,7 @@ import { useSleep } from '@/features/sleep/store';
 import type { DrinkType, WaterEntry } from '@/features/water/model';
 import { useWater } from '@/features/water/store';
 
-import type { SyncAdapter } from './engine';
+import type { Row, SyncAdapter } from './engine';
 import { stableUuid } from './ids';
 
 /** A synced table: which module's consent covers it, and whether it can sync right now. */
@@ -55,6 +65,24 @@ function uniqueBy<T>(records: T[], key: (r: T) => string, newer?: (a: T, b: T) =
   }
   return records.filter((r) => out.get(key(r)) === r);
 }
+
+const numOrNull = (v: unknown) => (v === null || v === undefined ? null : num(v));
+const group = (v: unknown): FoodGroup =>
+  (foodGroups as readonly string[]).includes(str(v)) ? (str(v) as FoodGroup) : 'other';
+const nutrientColumns = (n: Nutrients | null) => ({
+  energy_kcal: n?.kcal ?? null,
+  protein_g: n?.protein ?? null,
+  carbs_g: n?.carbs ?? null,
+  fat_g: n?.fat ?? null,
+  fiber_g: n?.fiber ?? null,
+});
+const nutrientsFrom = (r: Row): Nutrients => ({
+  kcal: numOrNull(r.energy_kcal),
+  protein: numOrNull(r.protein_g),
+  carbs: numOrNull(r.carbs_g),
+  fat: numOrNull(r.fat_g),
+  fiber: numOrNull(r.fiber_g),
+});
 
 const pregnancyId = (userId: string) => stableUuid(`${userId}:pregnancy`);
 const hasPregnancy = () => useRequirements.getState().dueDate !== null;
@@ -414,6 +442,102 @@ export function syncTables(userId: string): SyncTableDef[] {
         return { id: key ?? r.id, key, label: str(r.label), done: r.done === true };
       },
       replace: (bag) => usePregnancy.setState({ bag }),
+    }),
+    def<CustomFood>({
+      table: 'custom_foods',
+      module: 'nutrition',
+      list: () => useNutrition.getState().customFoods,
+      id: (f) => f.id,
+      updatedAt: (f) => f.updatedAt,
+      toRow: (f, user_id) => ({
+        id: f.id,
+        user_id,
+        name: f.name,
+        barcode: f.barcode,
+        serving_unit: f.servingUnit,
+        serving_grams: f.servingGrams,
+        food_group: f.group,
+        source: f.source,
+        ...nutrientColumns(f.nutrients),
+      }),
+      fromRow: (r) => ({
+        id: r.id,
+        name: str(r.name),
+        barcode: strOrNull(r.barcode),
+        servingUnit: str(r.serving_unit),
+        servingGrams: numOrNull(r.serving_grams),
+        group: group(r.food_group),
+        source: r.source === 'openFoodFacts' ? 'openFoodFacts' : 'manual',
+        nutrients: nutrientsFrom(r),
+        updatedAt: iso(r.updated_at),
+      }),
+      replace: (customFoods) => useNutrition.setState({ customFoods }),
+    }),
+    def<Meal>({
+      table: 'meals',
+      module: 'nutrition',
+      list: () => useNutrition.getState().meals,
+      id: (m) => m.id,
+      updatedAt: (m) => m.updatedAt,
+      toRow: (m, user_id) => ({
+        id: m.id,
+        user_id,
+        meal_type: m.type,
+        eaten_at: m.at,
+        local_day: m.day,
+        home_cooked: m.homeCooked,
+      }),
+      fromRow: (r) => ({
+        id: r.id,
+        type: str(r.meal_type) as MealType,
+        at: iso(r.eaten_at),
+        day: day(r.local_day ?? r.eaten_at),
+        homeCooked: r.home_cooked === true,
+        updatedAt: iso(r.updated_at),
+      }),
+      // A meal deleted elsewhere took its items with it on the server.
+      replace: (meals) =>
+        useNutrition.setState((s) => {
+          const ids = new Set(meals.map((m) => m.id));
+          return { meals, items: s.items.filter((i) => ids.has(i.mealId)) };
+        }),
+    }),
+    def<MealItem>({
+      table: 'meal_items',
+      module: 'nutrition',
+      list: () => {
+        const { meals, items } = useNutrition.getState();
+        const ids = new Set(meals.map((m) => m.id));
+        return items.filter((i) => ids.has(i.mealId));
+      },
+      id: (i) => i.id,
+      updatedAt: (i) => i.updatedAt,
+      toRow: (i, user_id) => ({
+        id: i.id,
+        user_id,
+        meal_id: i.mealId,
+        food_ref: i.foodRef,
+        name: i.name,
+        quantity: i.quantity,
+        unit: i.unit,
+        food_group: i.group,
+        ...nutrientColumns(i.nutrients),
+      }),
+      fromRow: (r) => {
+        const nutrients = nutrientsFrom(r);
+        return {
+          id: r.id,
+          mealId: str(r.meal_id),
+          foodRef: str(r.food_ref),
+          name: str(r.name),
+          quantity: num(r.quantity),
+          unit: str(r.unit),
+          group: group(r.food_group),
+          nutrients: Object.values(nutrients).some((v) => v !== null) ? nutrients : null,
+          updatedAt: iso(r.updated_at),
+        };
+      },
+      replace: (items) => useNutrition.setState({ items }),
     }),
   ];
 }

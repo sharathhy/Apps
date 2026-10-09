@@ -139,3 +139,48 @@ test('partner sharing explains itself and needs an account', async ({ page }) =>
   await expect(page.getByText(/enter their code here/)).toBeVisible();
   await expect(page.getByText(/does not provide medical advice/)).toBeVisible();
 });
+
+test('nutrition: log a food, see the plate, keep energy hidden, and scan a barcode', async ({
+  page,
+}) => {
+  await page.route('**/world.openfoodfacts.org/**', (route) =>
+    route.fulfill({
+      json: {
+        status: 1,
+        product: {
+          product_name: 'Oat bar',
+          serving_size: '1 bar (40 g)',
+          serving_quantity: 40,
+          nutriments: {
+            proteins_serving: 4,
+            carbohydrates_serving: 24,
+            'energy-kcal_serving': 160,
+          },
+        },
+      },
+    }),
+  );
+  await onboard(page);
+  await page.goto('/nutrition');
+  await expect(page.getByText(/My Plate for the Day/)).toBeVisible();
+  await page.getByRole('button', { name: 'Add to Lunch' }).click();
+  await page.getByLabel('Search foods').fill('chapati');
+  await page.getByRole('button', { name: 'Roti, Grains and millets' }).click();
+  await page.getByRole('button', { name: 'Add', exact: true }).click();
+  await expect(page).toHaveURL(/\/nutrition\/?$/);
+  await expect(page.getByText('Roti')).toBeVisible();
+  await expect(page.getByText('Grains and millets at 1 meal.')).toBeVisible();
+  await expect(page.getByText(/kcal/)).toHaveCount(1); // only the "Show energy" switch
+
+  await page.getByRole('link', { name: 'Scan a barcode' }).click();
+  await expect(page.getByText(/Only the barcode number is sent/)).toBeVisible();
+  await page.getByLabel('Or type the barcode number').fill('12345678');
+  await page.getByRole('button', { name: 'Look up' }).click();
+  await expect(page.getByLabel('Name')).toHaveValue('Oat bar');
+  await expect(page.getByText(/Values from Open Food Facts/)).toBeVisible();
+  await page.getByRole('radio', { name: 'Grains and millets' }).click();
+  await page.getByRole('button', { name: 'Save food' }).click();
+  const saved = (await stored(page, 'nutrition-v1')).state;
+  expect(saved.items).toHaveLength(1);
+  expect(saved.customFoods[0]).toMatchObject({ name: 'Oat bar', barcode: '12345678' });
+});

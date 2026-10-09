@@ -26,6 +26,8 @@ export const activityEvents = [
   'kick_session',
   'hospital_bag_packed',
   'meal_logged',
+  'colourful_day',
+  'home_cooked_meal',
 ] as const;
 export type ActivityEvent = (typeof activityEvents)[number];
 
@@ -164,6 +166,20 @@ export const achievements: AchievementDefinition[] = [
     icon: 'nutrition',
     module: 'nutrition',
     criterion: { kind: 'days', event: 'meal_logged', min: 7 },
+  },
+  {
+    id: 'colourful_plate',
+    category: 'wellness',
+    icon: 'nutrition',
+    module: 'nutrition',
+    criterion: { kind: 'days', event: 'colourful_day', min: 5 },
+  },
+  {
+    id: 'home_cooking',
+    category: 'wellness',
+    icon: 'home',
+    module: 'nutrition',
+    criterion: { kind: 'days', event: 'home_cooked_meal', min: 5 },
   },
   // Learning
   {

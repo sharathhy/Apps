@@ -53,6 +53,14 @@
         {
           "faceIDPermission": "Use Face ID to unlock your private wellness data."
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Scan a food barcode to look up the product. The camera is only used while you scan.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
       ]
     ],
     "experiments": {

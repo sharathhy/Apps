@@ -137,6 +137,10 @@ function ThemedNavigation() {
           name="pregnancy-tools/[tool]"
           options={{ headerShown: true, headerTitle: '' }}
         />
+        <Stack.Screen
+          name="nutrition-tools/[tool]"
+          options={{ headerShown: true, headerTitle: '' }}
+        />
         <Stack.Screen name="partner" options={{ headerShown: true, headerTitle: '' }} />
         <Stack.Screen
           name="setup/[requirement]"

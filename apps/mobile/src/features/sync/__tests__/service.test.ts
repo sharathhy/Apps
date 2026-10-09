@@ -3,6 +3,7 @@ import type { ModuleId } from '@wellness/design-tokens';
 import { useConsent } from '@/features/consent/store';
 import { useCycle } from '@/features/cycle/store';
 import { useMood } from '@/features/mood/store';
+import { useNutrition } from '@/features/nutrition/store';
 import { usePregnancy } from '@/features/pregnancy/store';
 import { useRequirements } from '@/features/requirements/store';
 import { useSleep } from '@/features/sleep/store';
@@ -47,7 +48,9 @@ function account() {
 const NOW = new Date('2026-10-09T12:00:00Z');
 
 /** A new phone: nothing on it but consent. */
-function freshDevice(modules: ModuleId[] = ['water', 'mood', 'sleep', 'cycle', 'pregnancy']) {
+function freshDevice(
+  modules: ModuleId[] = ['water', 'mood', 'sleep', 'cycle', 'pregnancy', 'nutrition'],
+) {
   for (const store of [
     useWater,
     useMood,
@@ -76,6 +79,31 @@ function logSomething() {
   });
   usePregnancy.getState().toggleBagItem('phoneCharger');
   usePregnancy.getState().saveWeight('2026-10-09', 62.4);
+  const food = useNutrition.getState().saveCustomFood({
+    name: 'Oat bar',
+    barcode: '12345678',
+    servingUnit: '1 bar',
+    servingGrams: 40,
+    nutrients: { kcal: 160, protein: 4, carbs: 24.5, fat: null, fiber: 2 },
+    group: 'grains',
+    source: 'openFoodFacts',
+  });
+  useNutrition.getState().addItem('lunch', '2026-10-09', {
+    foodRef: `custom:${food.id}`,
+    name: food.name,
+    quantity: 1.5,
+    unit: '1 bar',
+    group: 'grains',
+    nutrients: { kcal: 240, protein: 6, carbs: 36.75, fat: null, fiber: 3 },
+  });
+  useNutrition.getState().addItem('lunch', '2026-10-09', {
+    foodRef: 'in:dal',
+    name: 'Dal',
+    quantity: 1,
+    unit: 'katori',
+    group: 'pulses',
+    nutrients: null,
+  });
 }
 
 describe('sync service', () => {
@@ -97,6 +125,9 @@ describe('sync service', () => {
       periods: useCycle.getState().periods,
       appointments: usePregnancy.getState().appointments,
       weights: usePregnancy.getState().weights,
+      meals: useNutrition.getState().meals,
+      items: useNutrition.getState().items,
+      foods: useNutrition.getState().customFoods,
     };
 
     freshDevice();
@@ -113,6 +144,9 @@ describe('sync service', () => {
     expect(useRequirements.getState().dueDate).toBe('2027-03-01');
     expect(usePregnancy.getState().appointments).toEqual(before.appointments);
     expect(usePregnancy.getState().weights).toEqual(before.weights);
+    expect(useNutrition.getState().meals).toEqual(before.meals);
+    expect(useNutrition.getState().items).toEqual(before.items);
+    expect(useNutrition.getState().customFoods).toEqual(before.foods);
     // The starter checklist on the new phone takes the account's ticks.
     expect(usePregnancy.getState().bag.find((b) => b.key === 'phoneCharger')?.done).toBe(true);
   });
@@ -146,6 +180,18 @@ describe('sync service', () => {
     expect(table('water_logs').size).toBe(1);
     expect(table('mood_entries').size).toBe(0);
     expect(table('pregnancies').size).toBe(0);
+  });
+
+  it('drops items when their meal was deleted on another device', async () => {
+    const { remote, table } = account();
+    freshDevice();
+    logSomething();
+    await syncAll(remote, 'u1', NOW);
+    table('meals').clear();
+    table('meal_items').clear(); // the database cascades
+    await syncAll(remote, 'u1', NOW);
+    expect(useNutrition.getState().meals).toEqual([]);
+    expect(useNutrition.getState().items).toEqual([]);
   });
 
   it("never adds this device's entries to a different account", async () => {

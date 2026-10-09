@@ -30,18 +30,19 @@
 | Anonymous usage statistics | Screen counts, crash reports                              | Only if you consent              | Fixing problems; never includes health details         |
 | Notification delivery log  | Notification type, platform, outcome                      | When a notification is delivered | Debugging; contains no user identifier or message text |
 
-We do not collect precise location, contacts, photos or advertising identifiers.
+We do not collect precise location, contacts, photos or advertising identifiers. If you scan a food barcode, the camera is used only while the scanner is open; no image is stored or sent.
 
 ## 3. Where data is stored
 
 - **On your device**, in the app's private storage.
-- **In your account** (only if you create one), in our database hosted by Supabase […region…]. Data is encrypted in transit (TLS) and at rest. Row Level Security ensures each account can read only its own records.
+- **In your account** (only if you create one), in our database hosted by Supabase […region…]. Data is encrypted in transit (TLS) and at rest. Row Level Security ensures each account can read only its own records. While you are signed in, entries for the trackers you have allowed are copied to your account automatically so they are backed up and available on your other devices; trackers you have not allowed stay on the device.
 
 ## 4. Sharing
 
 We do not sell or rent personal data. We share data only:
 
 - with service providers that host the service on our behalf (Supabase for database and authentication; Sentry for crash reports with health details removed), under contracts that restrict their use;
+- with Open Food Facts, only when you look up a packaged food: the barcode number is sent so the product can be found. No account details or health data are sent with it;
 - with a partner you explicitly invite through partner sharing, limited to what you choose, revocable at any time;
 - when required by law.
 

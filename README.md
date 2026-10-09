@@ -4,7 +4,7 @@ A suite of health and wellness trackers built as one React Native (Expo) app for
 
 On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 
-> **Status: Phase 4 (Cycle and Pregnancy).** Accounts, consent, export and deletion (Phase 1), notifications and achievements (Phase 2), Water, Mood and Sleep (Phase 3), and Cycle and Pregnancy with partner sharing (Phase 4) are in place. Nutrition and offline sync come next.
+> **Status: Phase 5 (Nutrition and offline sync).** Accounts, consent, export and deletion (Phase 1), notifications and achievements (Phase 2), Water, Mood and Sleep (Phase 3), Cycle and Pregnancy with partner sharing (Phase 4), and Nutrition with offline sync for every tracker (Phase 5) are in place. Nutrient values for the built-in food list wait on a data source decision (see docs/parity/phase-5-nutrition.md). Accessibility, performance and the wording review come next.
 
 ## Repository layout
 

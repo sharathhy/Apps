@@ -5,4 +5,5 @@ export const nutritionModule: ModuleManifest = {
   icon: 'nutrition',
   href: '/nutrition',
   plannedPhase: 5,
+  ready: true,
 };

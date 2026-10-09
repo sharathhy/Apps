@@ -4,6 +4,7 @@ import { useSession } from '@/features/account/session';
 import { useConsent } from '@/features/consent/store';
 import { useCycle } from '@/features/cycle/store';
 import { useMood } from '@/features/mood/store';
+import { useNutrition } from '@/features/nutrition/store';
 import { usePregnancy } from '@/features/pregnancy/store';
 import { useRequirements } from '@/features/requirements/store';
 import { useSleep } from '@/features/sleep/store';
@@ -16,7 +17,15 @@ import { supabaseRemote } from './remote';
 import { useSync } from './store';
 
 /** Stores whose changes are synced. Changes are batched for a few seconds. */
-const watchedStores = [useWater, useMood, useSleep, useCycle, usePregnancy, useRequirements];
+const watchedStores = [
+  useWater,
+  useMood,
+  useSleep,
+  useCycle,
+  usePregnancy,
+  useNutrition,
+  useRequirements,
+];
 const DEBOUNCE_MS = 3000;
 
 /** Runs a sync straight away (the Settings "Sync now" button). Set while the service runs. */

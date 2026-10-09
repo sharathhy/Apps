@@ -1,0 +1,14 @@
+appId: com.example.wellness
+name: Nutrition logging and the balanced plate
+---
+- launchApp:
+    clearState: true
+- runFlow: _onboard.yaml
+- tapOn: 'Nutrition'
+- tapOn: 'Add to Lunch'
+- tapOn: 'Search foods'
+- inputText: 'dal'
+- tapOn: 'Dal, Pulses and beans'
+- tapOn: 'Add'
+- assertVisible: 'Pulses, eggs and meat at 1 meal.'
+- assertNotVisible: '.*kcal.*target.*'
