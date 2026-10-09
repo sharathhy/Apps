@@ -1050,5 +1050,22 @@
       "unsupported": "Notifications for shared updates arrive in the store version of the app. Updates still appear here.",
       "denied": "Allow notifications in your device settings first."
     }
+  },
+  "sync": {
+    "title": "Backup and sync",
+    "signedOut": "Your entries are saved on this device only. Sign in to back them up and use them on other devices.",
+    "syncing": "Syncing…",
+    "synced": "Everything is backed up. Last synced {{time}}.",
+    "never": "Not synced yet.",
+    "pending_one": "{{count}} change is saved on this device and will sync shortly.",
+    "pending_other": "{{count}} changes are saved on this device and will sync shortly.",
+    "waiting_one": "{{count}} change is saved on this device. It will sync automatically when you're back online.",
+    "waiting_other": "{{count}} changes are saved on this device. They will sync automatically when you're back online.",
+    "consentNote": "Only the trackers you have allowed are backed up. If two devices change the same entry, the newer change is kept.",
+    "now": "Sync now",
+    "otherAccount": "This device holds entries from a different account, so they are not added to this one. Sign in with that account to keep syncing them, or start fresh here.",
+    "startFresh": "Start fresh on this device",
+    "startFreshConfirm": "This removes the other account's tracker entries from this device only. That account keeps its backed-up copy.",
+    "startFreshYes": "Remove them from this device"
   }
 }

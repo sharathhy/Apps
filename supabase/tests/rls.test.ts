@@ -411,3 +411,80 @@ describeDb('partner sharing', () => {
     ).rejects.toThrow(/row-level security/);
   });
 });
+
+describeDb('offline sync', () => {
+  it('keeps the time a change was made on the device, and fixes clocks set in the future', async () => {
+    const id = await insertAs(
+      ALICE,
+      `insert into public.water_logs (amount_ml, updated_at) values (250, '2026-01-02T03:04:05Z') returning id`,
+    );
+    const kept = await as(
+      client,
+      ALICE,
+      async () =>
+        (await client.query(`select updated_at from public.water_logs where id = $1`, [id]))
+          .rows[0],
+    );
+    expect(new Date(kept.updated_at).toISOString()).toBe('2026-01-02T03:04:05.000Z');
+
+    await as(
+      client,
+      ALICE,
+      async () =>
+        client.query(
+          `update public.water_logs set amount_ml = 300, updated_at = now() + interval '1 day' where id = $1`,
+          [id],
+        ),
+      { commit: true },
+    );
+    const clamped = await as(
+      client,
+      ALICE,
+      async () =>
+        (
+          await client.query(
+            `select updated_at <= now() + interval '5 minutes' as ok from public.water_logs where id = $1`,
+            [id],
+          )
+        ).rows[0],
+    );
+    expect(clamped.ok).toBe(true);
+  });
+
+  it('stamps the server time when a change leaves the time alone', async () => {
+    const id = await insertAs(
+      ALICE,
+      `insert into public.water_logs (amount_ml, updated_at) values (250, '2026-01-02T03:04:05Z') returning id`,
+    );
+    await as(
+      client,
+      ALICE,
+      async () => client.query(`update public.water_logs set amount_ml = 400 where id = $1`, [id]),
+      {
+        commit: true,
+      },
+    );
+    const row = await as(
+      client,
+      ALICE,
+      async () =>
+        (
+          await client.query(
+            `select updated_at > '2026-01-02T03:04:05Z' as moved from public.water_logs where id = $1`,
+            [id],
+          )
+        ).rows[0],
+    );
+    expect(row.moved).toBe(true);
+  });
+
+  it('only lets each person sync rows into their own account', async () => {
+    await expect(
+      as(client, BOB, async () =>
+        client.query(`insert into public.water_logs (user_id, amount_ml) values ($1, 100)`, [
+          ALICE,
+        ]),
+      ),
+    ).rejects.toThrow();
+  });
+});

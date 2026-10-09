@@ -9,6 +9,7 @@ import { DataControls } from '@/components/DataControls';
 import { InstallCard } from '@/components/InstallCard';
 import { ListRow } from '@/components/ListRow';
 import { audiences, useProfile, type Audience } from '@/features/profile';
+import { SyncStatus } from '@/features/sync/SyncStatus';
 import { TrackerToggles } from '@/features/profile/components/TrackerToggles';
 import { MedicalDisclaimer } from '@/components/MedicalDisclaimer';
 import { SegmentedControl } from '@/components/SegmentedControl';
@@ -97,6 +98,10 @@ export default function SettingsScreen() {
       <Section title={t('account.title')}>
         <AccountSection />
         <ListRow icon="people" label={t('partner.title')} onPress={() => router.push('/partner')} />
+      </Section>
+
+      <Section title={t('sync.title')}>
+        <SyncStatus />
       </Section>
 
       <Section title={t('dataControls.title')}>

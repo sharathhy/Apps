@@ -11,6 +11,7 @@ import { usePregnancy } from '@/features/pregnancy/store';
 import { useRequirements } from '@/features/requirements/store';
 import { useAppLock } from '@/features/security/store';
 import { useSleep } from '@/features/sleep/store';
+import { useSync } from '@/features/sync/store';
 import { useWater } from '@/features/water/store';
 
 /**
@@ -33,6 +34,7 @@ export const persistedStores = {
   pregnancy: usePregnancy,
   partner: usePartner,
   appLock: useAppLock,
+  sync: useSync,
 } as const;
 
 export type PersistedStoreKey = keyof typeof persistedStores;

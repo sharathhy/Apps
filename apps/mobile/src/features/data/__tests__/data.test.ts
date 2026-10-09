@@ -42,6 +42,7 @@ describe('data export', () => {
       'reminders',
       'setupDetails',
       'sleep',
+      'sync',
       'water',
     ]);
     expect(device.profile).toMatchObject({ audience: 'women' });

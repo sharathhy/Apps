@@ -23,6 +23,7 @@ import { rehydrateAll } from '@/features/data/stores';
 import { startNotificationService } from '@/features/notifications/service';
 import { startPartnerSync } from '@/features/partner/sync';
 import { AppLockGate } from '@/features/security/AppLockGate';
+import { startSync } from '@/features/sync/service';
 import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -56,6 +57,7 @@ export default function RootLayout() {
   // Re-registers reminders on every start (also after a reinstall or restart).
   useEffect(() => (profileReady ? startNotificationService() : undefined), [profileReady]);
   useEffect(() => (profileReady ? startPartnerSync() : undefined), [profileReady]);
+  useEffect(() => (profileReady ? startSync() : undefined), [profileReady]);
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
