@@ -4,7 +4,7 @@ A suite of health and wellness trackers built as one React Native (Expo) app for
 
 On first launch each person chooses **Women's health** (all trackers), **Men's health** (every tracker except Cycle and Pregnancy, which are never offered) or **Show everything**. They can then switch individual trackers on or off. Their choice, language and light or dark theme are saved on the device only.
 
-> **Status: Phase 2 (notifications and achievements).** Accounts, per-category consent, export and deletion (Phase 1) plus reminders, the notification center, notification settings, achievements and missing-data prompts are in place. The tracker screens themselves are still placeholders; Water and Mood come next.
+> **Status: Phase 4 (Cycle and Pregnancy).** Accounts, consent, export and deletion (Phase 1), notifications and achievements (Phase 2), Water, Mood and Sleep (Phase 3), and Cycle and Pregnancy with partner sharing (Phase 4) are in place. Nutrition and offline sync come next.
 
 ## Repository layout
 
@@ -81,11 +81,13 @@ Accounts are optional. Without Supabase settings the app stores everything on th
 
 1. Create a free project at [supabase.com](https://supabase.com). The free plan includes 500 MB of database storage and 50,000 monthly active users, and pauses projects after a week without activity; check current limits at supabase.com/pricing.
 2. Install the [Supabase CLI](https://supabase.com/docs/guides/cli), then run `supabase link --project-ref <ref>` and `supabase db push` from the repository root to apply `supabase/migrations`.
-3. Deploy the deletion function: `supabase functions deploy delete-account`.
+3. Deploy the functions: `supabase functions deploy delete-account` and `supabase functions deploy notify-partners`.
 4. Under Authentication → URL configuration, add `wellness://**` and your web URL (for example `https://<your-app>.vercel.app/**`) to the redirect URLs, so the email confirmation and password reset links open the app.
 5. Put the project URL and anon key in `apps/mobile/.env` and, for the web build, in the Vercel project's environment variables.
 
 Every table forces Row Level Security, so each account can read and change only its own rows. Consent records are append-only, and the notification delivery log has no user column.
+
+**Partner sharing** is the one exception, and it is narrow: a partner can read the summary rows (`partner_snapshots`) for the scopes the owner chose, only while their `partner_links` row exists. Links are created only by `accept_partner_invite` with a single-use code (stored as a hash, valid 7 days). Either side can delete the link; the last link going away deletes the summary, and withdrawing consent ends every link. Notes, symptoms, weight and names are never shared. `supabase/tests/rls.test.ts` covers all of this.
 
 ## Privacy and legal
 

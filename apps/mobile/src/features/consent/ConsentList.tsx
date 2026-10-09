@@ -5,11 +5,11 @@ import { View } from 'react-native';
 import { SwitchRow } from '@/components/SwitchRow';
 import { allModules } from '@/features/registry';
 
-import { type ConsentCategory } from './categories';
+import { type ListedConsentCategory } from './categories';
 import { useConsent } from './store';
 
 /** One switch per data category, each explaining what is stored and why. */
-export function ConsentList({ categories }: { categories: ConsentCategory[] }) {
+export function ConsentList({ categories }: { categories: ListedConsentCategory[] }) {
   const { t } = useTranslation();
   const { accents, colors } = useTheme();
   const records = useConsent((s) => s.records);

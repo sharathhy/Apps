@@ -22,6 +22,10 @@ export const userTables = [
   'custom_foods',
   'meals',
   'meal_items',
+  'partner_invites',
+  'partner_links',
+  'partner_snapshots',
+  'push_tokens',
 ] as const;
 
 export type UserTable = (typeof userTables)[number];

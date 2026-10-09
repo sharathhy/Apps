@@ -5,4 +5,5 @@ export const pregnancyModule: ModuleManifest = {
   icon: 'pregnancy',
   href: '/pregnancy',
   plannedPhase: 4,
+  ready: true,
 };

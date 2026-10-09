@@ -6,6 +6,7 @@ import { useAchievements } from '@/features/achievements/store';
 import { useConsent } from '@/features/consent/store';
 import { cycleStats, periodStarts, predictCycle } from '@/features/cycle/model';
 import { useCycle } from '@/features/cycle/store';
+import { usePregnancy } from '@/features/pregnancy/store';
 import { activeModules } from '@/features/profile/activeModules';
 import { useProfile } from '@/features/profile/store';
 import { missingRequirements, nextRequirementNotice } from '@/features/requirements/definitions';
@@ -96,6 +97,33 @@ function periodSoon(now: Date, timeZone: string, modules: readonly string[]): On
   ];
 }
 
+export const APPOINTMENT_PREFIX = 'appointment:';
+/** Appointment reminders go out the evening before, or two hours before when that has passed. */
+const APPOINTMENT_EVENING_HOUR = 18;
+const APPOINTMENT_LEAD_MS = 2 * 60 * 60_000;
+
+function appointmentReminders(now: Date, timeZone: string, modules: readonly string[]): OneOff[] {
+  const pregnancy = usePregnancy.getState();
+  if (!modules.includes('pregnancy')) return [];
+  return pregnancy.appointments.flatMap((a) => {
+    const at = new Date(a.at);
+    if (!a.remind || at <= now) return [];
+    const dayBefore = parseDateKey(addDaysKey(localDateKey(at, timeZone), -1))!;
+    let fireAt = fromLocal({ ...dayBefore, hour: APPOINTMENT_EVENING_HOUR, minute: 0 }, timeZone);
+    if (fireAt <= now) fireAt = new Date(at.getTime() - APPOINTMENT_LEAD_MS);
+    if (fireAt <= now) return [];
+    return [
+      {
+        reminderId: `${APPOINTMENT_PREFIX}${a.id}`,
+        module: 'pregnancy' as const,
+        kind: 'scheduled' as const,
+        templateKey: 'pregnancy.appointment',
+        fireAt,
+      },
+    ];
+  });
+}
+
 /**
  * Re-plans every local notification and hands the result to the OS. Safe to
  * call often: unchanged notifications are left alone. Runs on start, on
@@ -106,7 +134,10 @@ function periodSoon(now: Date, timeZone: string, modules: readonly string[]): On
 export async function syncSchedule(now = new Date()): Promise<Plan> {
   const timeZone = deviceTimeZone();
   const prefs = useNotificationPrefs.getState();
-  const modules = activeModules();
+  // Ending pregnancy tracking quietly stops every pregnancy notification.
+  const modules = activeModules().filter(
+    (m) => m !== 'pregnancy' || usePregnancy.getState().status === 'active',
+  );
   const req = useRequirements.getState();
 
   const notice = nextRequirementNotice({
@@ -139,6 +170,7 @@ export async function syncSchedule(now = new Date()): Promise<Plan> {
           ]
         : []),
       ...periodSoon(now, timeZone, modules),
+      ...appointmentReminders(now, timeZone, modules),
     ],
   });
 
@@ -288,7 +320,7 @@ export function startNotificationService(): () => void {
   for (const store of [useReminders, useNotificationPrefs, useAchievements]) {
     cleanups.push(store.subscribe(onDataChange));
   }
-  for (const store of [useProfile, useConsent, useRequirements, useWater, useCycle]) {
+  for (const store of [useProfile, useConsent, useRequirements, useWater, useCycle, usePregnancy]) {
     cleanups.push(store.subscribe(scheduleSync));
   }
 

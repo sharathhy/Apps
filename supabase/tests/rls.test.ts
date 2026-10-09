@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+
 import type { Client } from 'pg';
 
 import { as, createTestDatabase } from './db';
@@ -301,5 +303,111 @@ describeDb('account deletion', () => {
       [ALICE],
     );
     expect(alice.rows[0].n).toBeGreaterThan(0);
+  });
+});
+
+describeDb('partner sharing', () => {
+  const DAN = '44444444-4444-4444-8444-444444444444'; // partner
+  const EVE = '55555555-5555-4555-8555-555555555555'; // someone else
+  const OWNER = '66666666-6666-4666-8666-666666666666';
+  const code = 'ABCD2345';
+  const hash = createHash('sha256').update(code).digest('hex');
+  const query = (uid: string, sql: string, params: unknown[] = []) =>
+    as(client, uid, async () => (await client.query(sql, params)).rows, { commit: true });
+  const consent = (uid: string, granted: boolean) =>
+    query(
+      uid,
+      `insert into consents (category, granted, policy_version) values ('partner_sharing', $1, '2026-10')`,
+      [granted],
+    );
+
+  beforeAll(async () => {
+    await client.query(
+      `insert into auth.users (id, email) values ($1, 'dan@example.com'), ($2, 'eve@example.com'), ($3, 'owner@example.com')`,
+      [DAN, EVE, OWNER],
+    );
+  });
+
+  it('needs partner sharing consent before an invite can be made', async () => {
+    await expect(
+      query(OWNER, `insert into partner_invites (code_hash, scopes) values ($1, '{week}')`, [hash]),
+    ).rejects.toThrow(/row-level security/);
+    await consent(OWNER, true);
+    await query(
+      OWNER,
+      `insert into partner_invites (code_hash, scopes) values ($1, '{week,appointments}')`,
+      [hash],
+    );
+    await query(
+      OWNER,
+      `insert into partner_snapshots (scope, data) values ('week', '{"dueDate":"2026-12-01"}'), ('appointments', '[]'), ('kicks', '[]')`,
+    );
+  });
+
+  it('never shows invites or snapshots to anyone else before a link exists', async () => {
+    expect(await query(DAN, 'select * from partner_invites')).toEqual([]);
+    expect(await query(DAN, 'select * from partner_snapshots')).toEqual([]);
+  });
+
+  it('lets the partner accept the code once, then read only the shared scopes', async () => {
+    await expect(query(OWNER, `select accept_partner_invite($1)`, [code])).rejects.toThrow(
+      /own invite/,
+    );
+    await query(DAN, `select accept_partner_invite($1)`, [code.toLowerCase()]);
+    await expect(query(EVE, `select accept_partner_invite($1)`, [code])).rejects.toThrow(
+      /invalid or expired/,
+    );
+    const shared = await query(DAN, 'select scope from partner_snapshots order by scope');
+    expect(shared.map((r) => r.scope)).toEqual(['week', 'appointments']);
+    expect(await query(EVE, 'select * from partner_snapshots')).toEqual([]);
+    expect(await query(DAN, 'select * from water_logs')).toEqual([]);
+  });
+
+  it('does not let a partner write the shared copy, create links or widen scopes', async () => {
+    await expect(
+      query(DAN, `update partner_snapshots set data = '{}' where user_id = $1`, [OWNER]),
+    ).resolves.toEqual([]);
+    await expect(
+      query(
+        DAN,
+        `insert into partner_links (user_id, partner_id, scopes) values ($1, $2, '{kicks}')`,
+        [OWNER, EVE],
+      ),
+    ).rejects.toThrow(/permission denied/);
+    expect(
+      await query(
+        DAN,
+        `update partner_links set scopes = '{week,appointments,kicks}' returning id`,
+      ),
+    ).toEqual([]);
+    expect(await query(DAN, `select scope from partner_snapshots where scope = 'kicks'`)).toEqual(
+      [],
+    );
+  });
+
+  it('removes access and the shared copy as soon as the owner revokes', async () => {
+    await query(OWNER, `delete from partner_links where partner_id = $1`, [DAN]);
+    expect(await query(DAN, 'select * from partner_snapshots')).toEqual([]);
+    const left = await client.query(
+      'select count(*)::int as n from partner_snapshots where user_id = $1',
+      [OWNER],
+    );
+    expect(left.rows[0].n).toBe(0);
+  });
+
+  it('ends every link when the owner withdraws consent', async () => {
+    const again = 'WXYZ6789';
+    await query(OWNER, `insert into partner_invites (code_hash, scopes) values ($1, '{kicks}')`, [
+      createHash('sha256').update(again).digest('hex'),
+    ]);
+    await query(DAN, `select accept_partner_invite($1)`, [again]);
+    await query(OWNER, `insert into partner_snapshots (scope, data) values ('kicks', '[]')`);
+    expect(await query(DAN, 'select scope from partner_snapshots')).toHaveLength(1);
+    await consent(OWNER, false);
+    expect(await query(DAN, 'select * from partner_links')).toEqual([]);
+    expect(await query(DAN, 'select * from partner_snapshots')).toEqual([]);
+    await expect(
+      query(OWNER, `insert into partner_snapshots (scope, data) values ('week', '{}')`),
+    ).rejects.toThrow(/row-level security/);
   });
 });

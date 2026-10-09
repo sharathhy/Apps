@@ -6,6 +6,8 @@ import { useNotificationPrefs } from '@/features/notifications/prefsStore';
 import { useReminders } from '@/features/notifications/remindersStore';
 import { useProfile } from '@/features/profile/store';
 import { useMood } from '@/features/mood/store';
+import { usePartner } from '@/features/partner/store';
+import { usePregnancy } from '@/features/pregnancy/store';
 import { useRequirements } from '@/features/requirements/store';
 import { useAppLock } from '@/features/security/store';
 import { useSleep } from '@/features/sleep/store';
@@ -28,6 +30,8 @@ export const persistedStores = {
   mood: useMood,
   sleep: useSleep,
   cycle: useCycle,
+  pregnancy: usePregnancy,
+  partner: usePartner,
   appLock: useAppLock,
 } as const;
 

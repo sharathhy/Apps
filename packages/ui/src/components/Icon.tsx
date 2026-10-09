@@ -47,6 +47,14 @@ export const icons = {
   clock: { ios: 'clock', android: 'schedule', web: 'schedule' },
   plus: { ios: 'plus', android: 'add', web: 'add' },
   trash: { ios: 'trash', android: 'delete', web: 'delete' },
+  stethoscope: { ios: 'stethoscope', android: 'stethoscope', web: 'stethoscope' },
+  scale: { ios: 'scalemass', android: 'monitor_weight', web: 'monitor_weight' },
+  baby: { ios: 'figure.and.child.holdinghands', android: 'child_care', web: 'child_care' },
+  bag: { ios: 'bag', android: 'luggage', web: 'luggage' },
+  people: { ios: 'person.2', android: 'group', web: 'group' },
+  tap: { ios: 'hand.tap', android: 'touch_app', web: 'touch_app' },
+  star: { ios: 'star', android: 'star', web: 'star' },
+  starFilled: { ios: 'star.fill', android: 'star', web: 'star' },
 } as const satisfies Record<string, SymbolName>;
 
 export type IconName = keyof typeof icons;

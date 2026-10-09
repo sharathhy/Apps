@@ -289,7 +289,8 @@
         "periodSoon": "A quick note: your cycle estimate has an update"
       },
       "pregnancy": {
-        "log": "Time for your check-in"
+        "log": "Time for your check-in",
+        "appointment": "You have an appointment coming up"
       },
       "nutrition": {
         "log": "Time to note your meal"
@@ -797,6 +798,257 @@
     "reminder": {
       "title": "Remind me before my period",
       "description": "Two days before the estimated start. The notification won't mention your period."
+    }
+  },
+  "pregnancy": {
+    "subtitle": "Week by week, appointments and checklists",
+    "tools": {
+      "weeks": "Week by week",
+      "appointments": "Appointments",
+      "symptoms": "Symptoms",
+      "kicks": "Kick counter",
+      "weight": "Weight",
+      "names": "Baby names",
+      "bag": "Hospital bag",
+      "partner": "Partner sharing"
+    },
+    "week": {
+      "progress": "{{weeks}} weeks along",
+      "weeksDays": "{{weeks}} weeks, {{days}} days",
+      "trimester": "Trimester {{n}}",
+      "term": {
+        "earlyTerm": "Early term",
+        "fullTerm": "Full term",
+        "lateTerm": "Late term",
+        "postTerm": "Post-term"
+      },
+      "due_one": "Estimated due date {{date}}, {{count}} day to go",
+      "due_other": "Estimated due date {{date}}, {{count}} days to go",
+      "past": "Your estimated due date was {{date}}. Stay in touch with your maternity team.",
+      "change": "Change due date"
+    },
+    "weeks": {
+      "week": "Week {{week}}",
+      "baby": "Your baby",
+      "you": "You",
+      "sources": "Sources: {{sources}}",
+      "all": "See all weeks",
+      "current": "This week",
+      "intro": "General information for each week, from WHO, ACOG and the NHS. Every pregnancy is different."
+    },
+    "urgent": {
+      "title": "Get help straight away if you have",
+      "action": "Contact your doctor, midwife or maternity unit now. In an emergency, call 112 in India or 911 in the USA.",
+      "source": "From NHS and ACOG urgent warning signs.",
+      "alertTitle": "Please get help now"
+    },
+    "symptoms": {
+      "nausea": "Nausea",
+      "vomiting": "Vomiting",
+      "heartburn": "Heartburn",
+      "tired": "Tiredness",
+      "backPain": "Back pain",
+      "headache": "Headache",
+      "constipation": "Constipation",
+      "legCramps": "Leg cramps",
+      "swelling": "Swollen feet or ankles",
+      "troubleSleeping": "Trouble sleeping",
+      "dizziness": "Feeling dizzy",
+      "bleeding": "Bleeding from the vagina",
+      "severeHeadache": "A severe headache that doesn't go away",
+      "visionChanges": "Blurred vision or flashing lights",
+      "suddenSwelling": "Sudden swelling of the face, hands or feet",
+      "severePain": "Severe pain in the tummy",
+      "fluidLeak": "Fluid leaking from the vagina",
+      "fewerMovements": "The baby moving less than usual"
+    },
+    "calculator": {
+      "title": "Work out your due date",
+      "lastPeriod": "From my last period",
+      "conception": "From conception",
+      "lastPeriodLabel": "First day of your last period ({{pattern}})",
+      "conceptionLabel": "Date of conception ({{pattern}})",
+      "result": "Estimated due date: {{date}}",
+      "save": "Use this due date",
+      "outOfRange": "Use a date within the last 42 weeks",
+      "note": "This is an estimate (280 days from the last period). Your doctor or midwife can confirm it, usually with an early scan."
+    },
+    "stop": {
+      "title": "Stop pregnancy tracking",
+      "description": "Hides pregnancy content and turns off its reminders. Your logs stay until you delete them.",
+      "button": "Stop tracking",
+      "confirm": "Yes, stop tracking",
+      "cancel": "Keep tracking"
+    },
+    "ended": {
+      "title": "Pregnancy tracking is off",
+      "message": "Take all the time you need. Your doctor or midwife can point you to support whenever you want it.",
+      "restart": "Start tracking again",
+      "delete": "Delete pregnancy data",
+      "deleteConfirm": "This deletes your due date and every pregnancy log on this device. It can't be undone.",
+      "deleteNow": "Delete now"
+    },
+    "appointments": {
+      "add": "Add an appointment",
+      "title": "What it's for",
+      "titlePlaceholder": "e.g. Scan, checkup",
+      "date": "Date ({{pattern}})",
+      "time": "Time",
+      "note": "Note (optional)",
+      "remind": "Remind me",
+      "remindDescription": "The evening before. The notification won't say what it's for.",
+      "save": "Save appointment",
+      "saved": "Appointment saved.",
+      "needTitle": "Add what the appointment is for",
+      "needDate": "Enter a date from today onwards as {{pattern}}",
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "none": "No upcoming appointments.",
+      "reminderOn": "reminder on",
+      "delete": "Delete {{title}}"
+    },
+    "symptomLog": {
+      "title": "How are you feeling today?",
+      "urgentGroup": "Needs help straight away",
+      "note": "Note (optional)",
+      "save": "Save",
+      "saved": "Saved.",
+      "history": "Recent",
+      "delete": "Delete the entry from {{date}}"
+    },
+    "kicks": {
+      "early": "Kick counting is usually suggested from {{week}} weeks. You can still use it.",
+      "minutes_one": "{{count}} minute",
+      "minutes_other": "{{count}} minutes",
+      "tap_one": "Add a movement. {{count}} so far",
+      "tap_other": "Add a movement. {{count}} so far",
+      "tapLabel": "Tap for each movement",
+      "reached": "You've felt {{count}} movements.",
+      "finish": "Finish session",
+      "intro": "Start a session and tap each time you feel a movement. Many people count to {{count}}. What matters most is getting to know your baby's usual pattern.",
+      "start": "Start counting",
+      "fewerTitle": "If your baby is moving less",
+      "fewer": "Contact your maternity unit or doctor straight away. Don't wait until the next day, and don't rely on a home heartbeat monitor.",
+      "history": "Recent sessions",
+      "session_one": "{{count}} movement in {{minutes}} min",
+      "session_other": "{{count}} movements in {{minutes}} min",
+      "delete": "Delete session"
+    },
+    "weight": {
+      "intro": "A private record for you and your doctor. There are no targets here.",
+      "label": "Today's weight ({{unit}})",
+      "save": "Save weight",
+      "saved": "Weight saved.",
+      "summary_one": "{{count}} entry, {{first}}",
+      "summary_other": "{{count}} entries, from {{first}} to {{last}}",
+      "empty": "No entries yet.",
+      "delete": "Delete the entry from {{date}}",
+      "rangesTitle": "Reference: typical total gain",
+      "rangesIntro": "The US Institute of Medicine (2009) gives these typical ranges for the whole of a single pregnancy, by BMI before pregnancy. They are not targets. Your doctor will tell you what's right for you.",
+      "bmi": {
+        "under18_5": "BMI under 18.5",
+        "18_5to24_9": "BMI 18.5 to 24.9",
+        "25to29_9": "BMI 25 to 29.9",
+        "30plus": "BMI 30 or more"
+      },
+      "rangesSource": "Source: IOM 2009, endorsed by ACOG."
+    },
+    "names": {
+      "label": "A name you like",
+      "add": "Add name",
+      "empty": "No names yet.",
+      "favorite": "Favourite: {{name}}",
+      "delete": "Delete {{name}}"
+    },
+    "bag": {
+      "progress": "{{packed}} of {{total}} packed",
+      "items": {
+        "notes": "Pregnancy notes and ID",
+        "birthPlan": "Birth plan, if you have one",
+        "comfyClothes": "Loose, comfortable clothes",
+        "nightwear": "Nightwear",
+        "slippers": "Slippers or flip-flops",
+        "maternityPads": "Maternity pads",
+        "underwear": "Comfortable underwear",
+        "nursingBras": "Nursing bras",
+        "toiletries": "Toiletries, towel and lip balm",
+        "snacksDrinks": "Snacks and drinks",
+        "phoneCharger": "Phone and charger",
+        "babyClothes": "Baby clothes and a hat",
+        "nappies": "Nappies (diapers)",
+        "babyBlanket": "A blanket for the baby",
+        "carSeat": "Baby car seat, if travelling by car"
+      },
+      "delete": "Delete {{item}}",
+      "addLabel": "Add your own item",
+      "add": "Add item",
+      "source": "Starter list based on the NHS guide to packing for labour. Change it however you like."
+    }
+  },
+  "partner": {
+    "title": "Partner sharing",
+    "partnerIntro": "If someone shared pregnancy updates with you, enter their code here. You'll see only what they chose to share, for as long as they share it.",
+    "noBackend": "Partner sharing needs an account, which isn't available in this version of the app.",
+    "needAccount": "Partner sharing needs an account on both phones, so updates can reach your partner.",
+    "signIn": "Sign in or create an account",
+    "owner": {
+      "title": "Share with a partner",
+      "intro": "Invite one person with a code. You choose what they see, and you can stop sharing at any time. Stopping removes their access straight away.",
+      "sharedTitle": "What you can share",
+      "neverTitle": "Never shared",
+      "never": "Notes, symptoms, weight, baby names and everything from your other trackers."
+    },
+    "scopes": {
+      "week": "Your week and due date",
+      "appointments": "Upcoming appointments (title and time)",
+      "kicks": "Kick counter sessions"
+    },
+    "consent": {
+      "title": "Your consent",
+      "body": "To share, we keep a copy of the parts you choose in your account, readable only by partners you invite. You can withdraw consent at any time, which ends all sharing and deletes that copy.",
+      "agree": "I agree to share with a partner I invite"
+    },
+    "invite": {
+      "title": "Invite your partner",
+      "choose": "Choose what to share",
+      "label": "Your name, as your partner will see it (optional)",
+      "create": "Create invite code",
+      "codeTitle": "Invite code",
+      "expires": "Works once, until {{date}}.",
+      "share": "Send the code",
+      "message": "Join me on Wellness: open Settings, then Partner sharing, and enter code {{code}} before {{date}}."
+    },
+    "links": {
+      "title": "Who can see your updates",
+      "loading": "Loading…",
+      "none": "Nobody yet.",
+      "since": "Partner since {{date}}",
+      "stop": "Stop sharing with this partner",
+      "stopped": "Sharing stopped. They can no longer see your updates."
+    },
+    "withdraw": {
+      "title": "Stop all sharing",
+      "body": "Ends sharing with everyone, deletes the shared copy and withdraws your consent.",
+      "button": "Stop all sharing"
+    },
+    "join": {
+      "title": "Enter a code",
+      "label": "Invite code",
+      "button": "Join",
+      "joined": "You're connected.",
+      "invalid": "That code didn't work. Check it, or ask for a new one."
+    },
+    "shared": {
+      "from": "Shared by {{name}}",
+      "title": "Shared with you",
+      "noKicks": "No sessions yet.",
+      "leave": "Stop seeing these updates"
+    },
+    "notify": {
+      "title": "Tell me when there's an update",
+      "description": "The notification only says there's an update in Wellness.",
+      "unsupported": "Notifications for shared updates arrive in the store version of the app. Updates still appear here.",
+      "denied": "Allow notifications in your device settings first."
     }
   }
 }

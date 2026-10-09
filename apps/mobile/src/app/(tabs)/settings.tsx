@@ -96,6 +96,7 @@ export default function SettingsScreen() {
 
       <Section title={t('account.title')}>
         <AccountSection />
+        <ListRow icon="people" label={t('partner.title')} onPress={() => router.push('/partner')} />
       </Section>
 
       <Section title={t('dataControls.title')}>

@@ -23,16 +23,23 @@ The OS permission is requested only after the person has turned notifications on
 
 ## Types
 
-| Type        | Trigger                                                                       | Delivery                                           | Priority under the daily limit |
-| ----------- | ----------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------ |
-| Scheduled   | A reminder at times the person chose, on chosen weekdays                      | Local notification, planned 7 days ahead           | 1 (kept first)                 |
-| Requirement | A tracker is missing a detail it needs, after the in-app prompt has been seen | Local, 10:00 local time, at most once every 7 days | 2                              |
-| Smart       | Reserved for Phase 3 (water reminders spread across waking hours)             | Local                                              | 3                              |
-| Insight     | Reserved for the weekly summary (opt-in)                                      | Local                                              | 4                              |
-| Achievement | An achievement is earned                                                      | Shown immediately, **once per achievement**        | 5                              |
-| System      | Account and security messages                                                 | Notification center only                           | Not limited                    |
+| Type        | Trigger                                                                                                     | Delivery                                           | Priority under the daily limit |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------ |
+| Scheduled   | A reminder at times the person chose, on chosen weekdays                                                    | Local notification, planned 7 days ahead           | 1 (kept first)                 |
+| Requirement | A tracker is missing a detail it needs, after the in-app prompt has been seen                               | Local, 10:00 local time, at most once every 7 days | 2                              |
+| Smart       | Water reminders spread across waking hours, held for an hour after a drink and stopped once the goal is met | Local                                              | 3                              |
+| Insight     | Reserved for the weekly summary (opt-in)                                                                    | Local                                              | 4                              |
+| Achievement | An achievement is earned                                                                                    | Shown immediately, **once per achievement**        | 5                              |
+| System      | Account and security messages                                                                               | Notification center only                           | Not limited                    |
 
-Push notifications are used only for server events (for example partner-sharing updates in Phase 4). Everything above is local.
+Two one-off scheduled reminders are planned from tracker data, under the same rules:
+
+- **Period reminder** (Cycle, off until turned on): 09:00 local, two days before the earliest estimated start.
+- **Appointment reminder** (Pregnancy, per appointment): 18:00 the evening before, or two hours before when that has passed.
+
+Stopping pregnancy tracking removes every pregnancy notification at the next rebuild.
+
+Push notifications are used only for server events: a partner gets "You have a new update in Wellness" when the person who invited them shares a change (at most once an hour, sent by the `notify-partners` function through the free Expo push service, only after the partner turns it on). Everything else is local.
 
 ### Rules applied to every notification
 
@@ -64,6 +71,9 @@ All wording is neutral. No guilt, streak-loss warnings, countdowns or pressure.
 | Cycle reminder           | Wellness / Time for your check-in            | Cycle / Time for your check-in                          |
 | Pregnancy reminder       | Wellness / Time for your check-in            | Pregnancy / Time for your check-in                      |
 | Nutrition reminder       | Wellness / Time for your check-in            | Nutrition / Time to note your meal                      |
+| Period reminder          | Wellness / Time for your check-in            | Cycle / A quick note: your cycle estimate has an update |
+| Appointment reminder     | Wellness / Time for your check-in            | Pregnancy / You have an appointment coming up           |
+| Partner update (push)    | Wellness / You have a new update in Wellness | Same (never shows details)                              |
 | Requirement: water goal  | Wellness / You have a new update in Wellness | Water / Add your water goal whenever you're ready       |
 | Requirement: last period | Wellness / You have a new update in Wellness | Cycle / Add your last period date whenever you're ready |
 | Requirement: due date    | Wellness / You have a new update in Wellness | Pregnancy / Add your due date whenever you're ready     |

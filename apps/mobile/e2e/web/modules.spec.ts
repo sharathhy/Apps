@@ -94,3 +94,48 @@ test('cycle is never offered to men', async ({ page }) => {
   await page.goto('/cycle');
   await expect(page.getByText('Day 1 of your cycle')).toHaveCount(0);
 });
+
+test('pregnancy: work out the due date, read the week and use the tools', async ({ page }) => {
+  await onboard(page);
+  await page.goto('/pregnancy');
+  const lmp = new Date(Date.now() - 70 * 86_400_000);
+  const dd = String(lmp.getDate()).padStart(2, '0');
+  const mm = String(lmp.getMonth() + 1).padStart(2, '0');
+  await page.getByLabel(/First day of your last period/).fill(`${dd}/${mm}/${lmp.getFullYear()}`);
+  await expect(page.getByText(/Estimated due date:/)).toBeVisible();
+  await page.getByRole('button', { name: 'Use this due date' }).click();
+  await expect(page.getByText('10 weeks, 0 days')).toBeVisible();
+  await expect(page.getByText(/Sources: ACOG, NHS/)).toBeVisible();
+  await expect(page.getByText(/does not provide medical advice/)).toBeVisible();
+
+  await page.getByRole('link', { name: 'Appointments' }).click();
+  await expect(page).toHaveURL(/\/pregnancy-tools\/appointments\/?$/);
+  const next = new Date(Date.now() + 5 * 86_400_000);
+  await page.getByLabel("What it's for").fill('Dating scan');
+  await page
+    .getByLabel(/^Date/)
+    .fill(
+      `${String(next.getDate()).padStart(2, '0')}/${String(next.getMonth() + 1).padStart(2, '0')}/${next.getFullYear()}`,
+    );
+  await page.getByRole('button', { name: 'Save appointment' }).click();
+  await expect(page.getByText('Dating scan')).toBeVisible();
+  // The overview stays mounted under the tool page, so there are two disclaimers.
+  await expect(page.getByText(/does not provide medical advice/).last()).toBeVisible();
+
+  await page.goto('/pregnancy-tools/kicks');
+  await page.getByRole('button', { name: 'Start counting' }).click();
+  await page.getByRole('button', { name: /Add a movement/ }).click();
+  await page.getByRole('button', { name: /Add a movement/ }).click();
+  await page.getByRole('button', { name: 'Finish session' }).click();
+  await expect(page.getByText('2 movements in 0 min')).toBeVisible();
+  const stored2 = (await stored(page, 'pregnancy-v1')).state;
+  expect(stored2.appointments).toHaveLength(1);
+  expect(stored2.kicks).toHaveLength(1);
+});
+
+test('partner sharing explains itself and needs an account', async ({ page }) => {
+  await onboard(page, "Men's health");
+  await page.goto('/partner');
+  await expect(page.getByText(/enter their code here/)).toBeVisible();
+  await expect(page.getByText(/does not provide medical advice/)).toBeVisible();
+});

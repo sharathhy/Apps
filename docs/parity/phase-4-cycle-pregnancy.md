@@ -1,6 +1,6 @@
 # Parity checklist: Cycle and Pregnancy (Phase 4)
 
-Features commonly found in popular cycle and pregnancy trackers, and whether this app has them. Both modules are only offered to people who chose "Women" or "Everyone" during setup, and only after the separate consent for that data category. Items marked **Your call** are common elsewhere but not in the spec; they are not built unless you ask.
+Features commonly found in popular cycle and pregnancy trackers, and whether this app has them. Both modules are only offered to people who chose "Women" or "Everyone" during setup, and only after the separate consent for that data category. **Status after Phase 4:** every "Planned" item is built. Push for partner updates needs a store build with an EAS project, so it is verified in Phase 7. Items marked **Your call** are common elsewhere but not in the spec; they are not built unless you ask.
 
 Every screen in both modules shows the medical disclaimer. Every prediction is labelled as an estimate, and the source behind each calculation is cited in the code and on screen.
 

@@ -21,6 +21,7 @@ import { useEffect, useState } from 'react';
 import { watchSession } from '@/features/account/session';
 import { rehydrateAll } from '@/features/data/stores';
 import { startNotificationService } from '@/features/notifications/service';
+import { startPartnerSync } from '@/features/partner/sync';
 import { AppLockGate } from '@/features/security/AppLockGate';
 import { useProfile } from '@/features/profile';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -54,6 +55,7 @@ export default function RootLayout() {
 
   // Re-registers reminders on every start (also after a reinstall or restart).
   useEffect(() => (profileReady ? startNotificationService() : undefined), [profileReady]);
+  useEffect(() => (profileReady ? startPartnerSync() : undefined), [profileReady]);
 
   useEffect(() => {
     if (ready) void SplashScreen.hideAsync();
@@ -129,6 +131,11 @@ function ThemedNavigation() {
           name="support"
           options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}
         />
+        <Stack.Screen
+          name="pregnancy-tools/[tool]"
+          options={{ headerShown: true, headerTitle: '' }}
+        />
+        <Stack.Screen name="partner" options={{ headerShown: true, headerTitle: '' }} />
         <Stack.Screen
           name="setup/[requirement]"
           options={{ headerShown: true, headerTitle: '', presentation: 'modal' }}

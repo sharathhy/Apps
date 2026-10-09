@@ -36,6 +36,8 @@ describe('data export', () => {
       'mood',
       'notificationCenter',
       'notificationPreferences',
+      'partner',
+      'pregnancy',
       'profile',
       'reminders',
       'setupDetails',

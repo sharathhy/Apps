@@ -2,6 +2,7 @@ import { useAchievements } from '@/features/achievements/store';
 import { trackActivity } from '@/features/achievements/award';
 import { useConsent } from '@/features/consent/store';
 import { useCycle } from '@/features/cycle/store';
+import { usePregnancy } from '@/features/pregnancy/store';
 import { useProfile } from '@/features/profile/store';
 import { useRequirements } from '@/features/requirements/store';
 import { fakeState } from '@/test/fakeNotifications';
@@ -10,7 +11,7 @@ import { reminderToRow, restoreNotificationData } from '../accountSync';
 import { useInbox } from '../inboxStore';
 import { useNotificationPrefs } from '../prefsStore';
 import { useReminders } from '../remindersStore';
-import { PERIOD_SOON_ID, snoozeReminder, syncSchedule } from '../service';
+import { APPOINTMENT_PREFIX, PERIOD_SOON_ID, snoozeReminder, syncSchedule } from '../service';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 jest.mock('expo-notifications', () => require('@/test/fakeNotifications').fake);
@@ -51,6 +52,7 @@ function setUp() {
     useAchievements,
     useRequirements,
     useCycle,
+    usePregnancy,
   ]) {
     (store.getState() as { reset: () => void }).reset();
   }
@@ -187,6 +189,34 @@ describe('period reminder', () => {
     useCycle.getState().setPeriodReminder(true);
     const plan = await syncSchedule(now);
     expect(plan.planned.some((p) => p.reminderId === PERIOD_SOON_ID)).toBe(false);
+  });
+});
+
+describe('appointment reminders', () => {
+  beforeEach(() => {
+    useConsent.getState().decide('pregnancy', true);
+    usePregnancy.getState().saveAppointment({
+      title: 'Scan',
+      at: '2026-10-12T05:30:00.000Z', // 11:00 in India
+      note: '',
+      remind: true,
+    });
+  });
+
+  it('reminds the evening before at 18:00, in private wording', async () => {
+    const plan = await syncSchedule(now);
+    const items = plan.planned.filter((p) => p.reminderId.startsWith(APPOINTMENT_PREFIX));
+    expect(items.map((p) => p.fireAt.toISOString())).toEqual(['2026-10-11T12:30:00.000Z']);
+    const scheduled = [...fakeState.scheduled.values()].find(
+      (r) => (r.trigger as { date: Date }).date.toISOString() === '2026-10-11T12:30:00.000Z',
+    );
+    expect(scheduled?.content.body).toBe('Time for your check-in');
+  });
+
+  it('stops every pregnancy notification once tracking is stopped', async () => {
+    usePregnancy.getState().setStatus('ended');
+    const plan = await syncSchedule(now);
+    expect(plan.planned.filter((p) => p.module === 'pregnancy')).toEqual([]);
   });
 });
 

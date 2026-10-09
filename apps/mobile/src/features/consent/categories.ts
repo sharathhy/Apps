@@ -3,10 +3,13 @@ import type { ModuleId } from '@wellness/design-tokens';
 /** Bump when the privacy policy changes in a way that needs fresh consent. */
 export const POLICY_VERSION = '2026-10';
 
-export type ConsentCategory = ModuleId | 'anonymous_analytics';
+/** Categories shown in onboarding and on the data permissions screen. */
+export type ListedConsentCategory = ModuleId | 'anonymous_analytics';
+/** Partner sharing is asked for on its own screen, just before anything is shared. */
+export type ConsentCategory = ListedConsentCategory | 'partner_sharing';
 
 /** Categories asked about during onboarding, given the trackers a person chose. */
-export function consentCategoriesFor(trackers: ModuleId[]): ConsentCategory[] {
+export function consentCategoriesFor(trackers: ModuleId[]): ListedConsentCategory[] {
   return [...trackers, 'anonymous_analytics'];
 }
 

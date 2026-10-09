@@ -13,4 +13,13 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 // The OS notification APIs are replaced by an in-memory scheduler in every test.
 jest.mock('expo-notifications', () => require('./src/test/fakeNotifications').fake);
 // jest-expo stubs expo-crypto to return undefined; ids must be unique in tests too.
-jest.mock('expo-crypto', () => ({ randomUUID: () => require('node:crypto').randomUUID() }));
+jest.mock('expo-crypto', () => {
+  const crypto = require('node:crypto');
+  return {
+    randomUUID: () => crypto.randomUUID(),
+    getRandomBytes: (n: number) => new Uint8Array(crypto.randomBytes(n)),
+    CryptoDigestAlgorithm: { SHA256: 'SHA-256' },
+    digestStringAsync: async (_algorithm: string, data: string) =>
+      crypto.createHash('sha256').update(data).digest('hex'),
+  };
+});
